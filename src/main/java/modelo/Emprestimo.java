@@ -20,7 +20,7 @@ public class Emprestimo {
         this.amigo = amigo;
         this.ferramentas = ferramentas;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = null; // Data de devolução começa como null
+        this.dataDevolucao = null; 
     }
 
     public int getId() {
