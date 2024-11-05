@@ -2,28 +2,18 @@ package modelo;
 
 /**
  *
- * @author joaov
+ * @author victor omv
  */
 public class Ferramenta {
 
-    private int id;
     private String nome;
     private String marca;
     private double custo;
 
-    public Ferramenta(int id, String nome, String marca, double custo) {
-        this.id = id;
+    public Ferramenta(String nome, String marca, double custo) {
         this.nome = nome;
         this.marca = marca;
         this.custo = custo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -52,6 +42,5 @@ public class Ferramenta {
 
     @Override
     public String toString() {
-        return "Ferramenta [ID=" + id + ", Nome=" + nome + ", Marca=" + marca + ", Custo=" + custo + "]";
-    }
+        return "Ferramenta [Nome=" + nome + ", Marca=" + marca + ", Custo=" + custo + "]";
 }

@@ -5,22 +5,12 @@ package modelo;
  * @author joaov
  */
 public class Amigo {
-    private int id;
     private String nome;
     private String telefone;
 
-    public Amigo(int id, String nome, String telefone) {
-        this.id = id;
+    public Amigo(String nome, String telefone) {
         this.nome = nome;
         this.telefone = telefone;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -41,7 +31,7 @@ public class Amigo {
 
     @Override
     public String toString() {
-        return "Amigo [ID=" + id + ", Nome=" + nome + ", Telefone=" + telefone + "]";
+        return "Amigo [Nome=" + nome + ", Telefone=" + telefone + "]";
     }
 }
 
