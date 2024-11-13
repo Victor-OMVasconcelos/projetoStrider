@@ -46,6 +46,7 @@ public class Amigo {
             stmt.setString(2, this.nome);
             stmt.setString(3, this.telefone);
             stmt.executeUpdate();
+        }
     }
 }
 
