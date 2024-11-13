@@ -37,9 +37,15 @@ public class Amigo {
         this.telefone = telefone;
     }
 
-    @Override
-    public String toString() {
-        return "Amigo [Nome=" + nome + ", Telefone=" + telefone + "]";
+    public void save() throws SQLException {
+        String query = "INSERT INTO amigos (id, nome_amigo, telefone) VALUES (?, ?, ?)";
+
+        try (Connection con = ConexaoBd.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, this.id);
+            stmt.setString(2, this.nome);
+            stmt.setString(3, this.telefone);
+            stmt.executeUpdate();
     }
 }
 
