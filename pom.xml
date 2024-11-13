@@ -11,4 +11,13 @@
         <exec.mainClass>com.mycompany.teste_projeto.Teste_projeto</exec.mainClass>
     </properties>
     <name>Emprestimos_Strider</name>
+    
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>9.1.0</version>
+        </dependency>
+    </dependencies>
+
 </project>
