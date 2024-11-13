@@ -43,4 +43,5 @@ public class Ferramenta {
     @Override
     public String toString() {
         return "Ferramenta [Nome=" + nome + ", Marca=" + marca + ", Custo=" + custo + "]";
+    }
 }
