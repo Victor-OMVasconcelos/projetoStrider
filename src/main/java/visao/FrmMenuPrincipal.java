@@ -26,6 +26,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemNovo = new javax.swing.JMenuItem();
+        jMenuItemGerenciarAmigos = new javax.swing.JMenuItem();
         jMenuItemGerenciarFerramentas = new javax.swing.JMenuItem();
         jMenuItemSair = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -41,7 +42,20 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Arquivo");
 
         jMenuItemNovo.setText("Cadastrar Ferramenta");
+        jMenuItemNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemNovoActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItemNovo);
+
+        jMenuItemGerenciarAmigos.setText("Cadastrar Amigo(a)");
+        jMenuItemGerenciarAmigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGerenciarAmigosActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemGerenciarAmigos);
 
         jMenuItemGerenciarFerramentas.setText("Gerenciar Ferramentas");
         jMenuItemGerenciarFerramentas.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +151,18 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         creditos.criarCreditos();
     }//GEN-LAST:event_jMenuItemCreditosActionPerformed
 
+    private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
+        FrmCadastroFerramenta objeto = new FrmCadastroFerramenta();
+        objeto.setLocation(50, 200);
+        objeto.setVisible(true);
+    }//GEN-LAST:event_jMenuItemNovoActionPerformed
+
+    private void jMenuItemGerenciarAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGerenciarAmigosActionPerformed
+        FrmCadastroAmigo objeto = new FrmCadastroAmigo();
+        objeto.setLocation(200, 200);
+        objeto.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGerenciarAmigosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -179,6 +205,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemCreditos;
     private javax.swing.JMenuItem jMenuItemDescricao;
+    private javax.swing.JMenuItem jMenuItemGerenciarAmigos;
     private javax.swing.JMenuItem jMenuItemGerenciarFerramentas;
     private javax.swing.JMenuItem jMenuItemLicenca;
     private javax.swing.JMenuItem jMenuItemNovo;
