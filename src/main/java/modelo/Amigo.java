@@ -9,6 +9,12 @@ public class Amigo {
     private String telefone;
 
     public Amigo(int id, String nome, String telefone) {
+        if (nome == null || nome.isEmpty() || telefone == null || telefone.isEmpty()){
+            throw new IllegalArgumentException("Nome e telefone não podem ser vazios.");
+        }
+        if (telefone == null || !telefone.matches("\\d{4,5}-\\d{4}")) {
+            throw new IllegalArgumentException("Telefone em formato inválido. Use 'XXXX-XXXX'.");
+        }
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -26,6 +32,9 @@ public class Amigo {
     }
 
     public void setNome(String nome) {
+        if(nome == null || nome.isEmpty()){
+            throw new IllegalArgumentException ("Nome não pode ser vazio.");
+        }
         this.nome = nome;
     }
 
@@ -34,6 +43,9 @@ public class Amigo {
     }
 
     public void setTelefone(String telefone) {
+        if(telefone == null || !telefone.matches("\\d{4,5}-\\d{4}")){
+            throw new IllegalArgumentException("Telefone em formato inválido. Use 'XXXX-XXXX'.");
+         }
         this.telefone = telefone;
     }
 
@@ -46,7 +58,15 @@ public class Amigo {
             stmt.setString(2, this.nome);
             stmt.setString(3, this.telefone);
             stmt.executeUpdate();
+            System.out.println("Amigo salvo com sucesso!");
+        } catch (SQLException e) {
+             System.err.println("Erro ao salvar amigo: " + e.getMessage());
+            throw e;
         }
     }
+    
+@Override
+    public String toString() {
+        return "Amigo{" + "id=" + id + ", nome='" + nome + '\'' + ", telefone='" + telefone + '\'' + '}';
+    }
 }
-
