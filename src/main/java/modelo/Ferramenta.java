@@ -1,27 +1,39 @@
 package modelo;
 
+import dao.FerramentaDAO;
+
 /**
  *
  * @author victor omv
  */
 public class Ferramenta {
 
+    private int id;
     private String nome;
     private String marca;
-    private double custo;
+    private double preco;
+    private FerramentaDAO dao;
 
-    public Ferramenta(String nome, String marca, double custo) {
+    //Construtor com parâmetros
+    public Ferramenta(Integer id, String nome, String marca, double preco) {
+        this.id = id;
         this.nome = nome;
         this.marca = marca;
-        this.custo = custo;
+        this.preco = preco;
+        this.dao = new FerramentaDAO();
     }
 
-    public String getNome() {
-        return nome;
+    //Construtor vazio
+    public Ferramenta (){
+        this(0, "", "", 0.0);
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMarca() {
@@ -32,16 +44,35 @@ public class Ferramenta {
         this.marca = marca;
     }
 
-    public double getCusto() {
-        return custo;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setCusto(double custo) {
-        this.custo = custo;
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
+    public FerramentaDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(FerramentaDAO dao) {
+        this.dao = dao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+
+
+    //Retorna os dados da ferramenta em String
     @Override
     public String toString() {
-        return "Ferramenta [Nome=" + nome + ", Marca=" + marca + ", Custo=" + custo + "]";
+        return "Ferramenta [Nome= " + nome + ", Marca= " + marca + ", Custo= " + preco + "]";
     }
 }
