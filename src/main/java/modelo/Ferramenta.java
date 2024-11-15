@@ -1,6 +1,7 @@
 package modelo;
 
 import dao.FerramentaDAO;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Ferramenta {
     }
 
     //Construtor vazio
-    public Ferramenta (){
+    public Ferramenta() {
         this(0, "", "", 0.0);
     }
 
@@ -67,12 +68,45 @@ public class Ferramenta {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-
 
     //Retorna os dados da ferramenta em String
     @Override
     public String toString() {
         return "Ferramenta [Nome= " + nome + ", Marca= " + marca + ", Custo= " + preco + "]";
+    }
+
+    public ArrayList<Ferramenta> getMinhaLista() {
+        return dao.getMinhaLista();
+    }
+
+    //Insere uma nova ferramenta
+    public boolean insereFerramentaBD(String nome, String marca, double preco) {
+        int id = this.maiorID() + 1;
+        Ferramenta objeto = new Ferramenta(id, nome, marca, preco);
+        dao.insereFerramentaBD(objeto);
+        return true;
+    }
+
+    //Deleta uma ferramenta especÍfica pelo ID.
+    public boolean deletaFerramentaBD(int id) {
+        dao.deletaFerramentaBD(id);
+        return true;
+    }
+
+    //Edita uma ferramenta especÍfica pelo ID.
+    public boolean atualizaFerramentaBD(int id, String nome, String marca, double preco) {
+        Ferramenta objeto = new Ferramenta(id, nome, marca, preco);
+        dao.atualizaFerramentaBD(objeto);
+        return true;
+    }
+
+    //Carrega dados de um aluno especÍfico pelo seu ID.
+    public Ferramenta carregaFerramenta(int id) {
+        return dao.carregaFerramenta(id);
+    }
+
+    //Retorna o maior ID da nossa base de dados.
+    public int maiorID() {
+        return dao.maiorID();
     }
 }
