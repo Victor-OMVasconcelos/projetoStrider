@@ -125,7 +125,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemGerenciarFerramentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGerenciarFerramentasActionPerformed
-        // TODO add your handling code here:
+        FrmGerenciarFerramenta objeto = new FrmGerenciarFerramenta();
+        objeto.setLocation(50, 200);
+        objeto.setVisible(true);
     }//GEN-LAST:event_jMenuItemGerenciarFerramentasActionPerformed
 
     private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
