@@ -1,16 +1,21 @@
 package visao;
 
+import javax.swing.JOptionPane;
+import modelo.Ferramenta;
+
 /**
  *
  * @author joaov
  */
 public class FrmCadastroFerramenta extends javax.swing.JFrame {
-
+    private Ferramenta objetoferramenta;
+    
     /**
      * Creates new form FrmCadastroFerramenta
      */
     public FrmCadastroFerramenta() {
         initComponents();
+        this.objetoferramenta = new Ferramenta();
     }
 
     /**
@@ -62,6 +67,11 @@ public class FrmCadastroFerramenta extends javax.swing.JFrame {
         });
 
         JBCadastrar.setText("Cadastrar");
+        JBCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadastrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,6 +142,49 @@ public class FrmCadastroFerramenta extends javax.swing.JFrame {
         JTFMarca.setText("");
         JTFPreco.setText("");
     }//GEN-LAST:event_JBLimparActionPerformed
+
+    private void JBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadastrarActionPerformed
+        try {
+            // recebendo e validando dados da interface gráfica.
+            String nome = "";
+            String marca = "";
+            double preco = 0.0;
+
+            if (this.JTFNomeFerramenta.getText().length() < 2) {
+                throw new Mensagem("Nome da ferramenta deve conter ao menos 2 caracteres.");
+            } else {
+                nome = this.JTFNomeFerramenta.getText();
+            }
+
+            if (this.JTFMarca.getText().length() < 1) {
+                throw new Mensagem("Marca deve ao menos conter 1 caractere.");
+            } else {
+                this.JTFMarca.getText();
+            }
+
+            if (this.JTFPreco.getText().length() <= 0) {
+                throw new Mensagem("O custo da ferramenta deve conter somente numerais e ser maior do que 0.");
+            } else {
+                preco = Double.parseDouble(this.JTFPreco.getText());
+            }
+
+            // envia os dados para o Controlador cadastrar.
+            if (this.objetoferramenta.insereFerramentaBD(nome, marca, preco)) {
+                JOptionPane.showMessageDialog(null, "Ferramenta cadastrada com sucesso!");
+                // limpa campos da interface
+                this.JTFNomeFerramenta.setText("");
+                this.JTFMarca.setText("");
+                this.JTFPreco.setText("");
+            }
+            //Exibie no console a ferramenta cadastrada.
+            System.out.println(this.objetoferramenta.getMinhaLista().toString());
+
+        } catch (Mensagem erro) {
+            JOptionPane.showMessageDialog(null, erro.getMessage());
+        } catch (NumberFormatException erro2) {
+            JOptionPane.showMessageDialog(null, "Informe um número válido.");
+        }
+    }//GEN-LAST:event_JBCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
