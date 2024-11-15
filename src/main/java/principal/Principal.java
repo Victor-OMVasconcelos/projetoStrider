@@ -10,6 +10,7 @@ import java.sql.SQLException;
 public class Principal {
 
     public static void main(String[] args) {
+        /*
         try {
             Amigo amigo = new Amigo(3, "cauan", "8856-789");
             amigo.save();
@@ -17,11 +18,11 @@ public class Principal {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        */
         
-        /*
         FrmMenuPrincipal objeto = new FrmMenuPrincipal();
         objeto.setLocationRelativeTo(null);
         objeto.setVisible(true);
-       */
+       
     }
 }
