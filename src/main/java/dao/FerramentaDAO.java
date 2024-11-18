@@ -160,7 +160,7 @@ public class FerramentaDAO {
         try {
             Statement stmt = this.getConexao().createStatement();
 
-            ResultSet res = stmt.executeQuery("SELECT * FROM tb_ferramentas WHERE id = " + id);
+            ResultSet res = stmt.executeQuery("SELECT * FROM tb_ferramentas");
             res.next();
 
             objeto.setNome(res.getString("nome"));
