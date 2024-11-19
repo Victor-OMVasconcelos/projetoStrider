@@ -74,7 +74,7 @@ public class FerramentaDAO {
             // Configurar a conexão
             String server = "localhost"; //caminho do MySQL
             String database = "strider_db";
-            String url = "jdbc:mysql://localhost:3306/strider_db" + server + ":3306/" + database + "?useTimezone=true&serverTimezone=UTC";
+            String url = "jdbc:mysql://localhost:3306/strider_db";
             String user = "root";
             String password = "root";
 
