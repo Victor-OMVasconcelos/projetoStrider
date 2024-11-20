@@ -60,23 +60,22 @@ public class FerramentaDAO {
 
     
     //Insere Ferramenta na db
-    public boolean insereFerramentaBD(Ferramenta objeto) {
-        String sql = "INSERT INTO tb_ferramentas(id,nome,marca,preco) VALUES(?,?,?,?)";
-        try {
-            PreparedStatement stmt = this.getConexao().prepareStatement(sql);
+    public boolean insereFerramentaBD(Ferramenta ferramenta) {
+        String sql = "INSERT INTO ferramentas(id,nome_ferramentas,marca,preco) VALUES(?,?,?,?)";
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setInt(1, objeto.getId());
-            stmt.setString(2, objeto.getNome());
-            stmt.setString(3, objeto.getMarca());
-            stmt.setDouble(4, objeto.getPreco());
+            stmt.setInt(1, ferramenta.getId());
+            stmt.setString(2, ferramenta.getNome());
+            stmt.setString(3, ferramenta.getMarca());
+            stmt.setDouble(4, ferramenta.getPreco());
 
             stmt.execute();
-            stmt.close();
 
             return true;
         } catch (SQLException erro) {
             System.out.println("Erro:" + erro);
-            throw new RuntimeException(erro);
+            return false;
         }
     }
 
