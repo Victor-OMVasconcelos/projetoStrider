@@ -1,5 +1,6 @@
 package dao;
 
+import dao.ConexaoBd;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,22 +22,19 @@ public class FerramentaDAO {
     public ArrayList<Ferramenta> getMinhaLista() {
         minhaLista.clear(); //Limpa a ArrayList
 
-        try {
-            Statement stmt = this.getConexao().createStatement();
-            ResultSet res = stmt.executeQuery("SELECT * FROM tb_alunos");
+        try (Connection conexao = ConexaoBd.getConnection();
+            Statement stmt = conexao.createStatement();
+            ResultSet res = stmt.executeQuery("SELECT * FROM ferramentas")) {
+            
             while (res.next()) {
-
                 int id = res.getInt("id");
-                String nome = res.getString("nome");
+                String nome = res.getString("nome_ferramenta");
                 String marca = res.getString("marca");
                 double preco = res.getDouble("preco");
 
-                Ferramenta objeto = new Ferramenta(id, nome, marca, preco);
-
-                minhaLista.add(objeto);
-            }
-            stmt.close();
-
+                Ferramenta ferramenta = new Ferramenta(id, nome, marca, preco);
+                minhaLista.add(ferramenta);
+            }   
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex);
         }
