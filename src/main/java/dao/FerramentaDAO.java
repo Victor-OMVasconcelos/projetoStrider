@@ -45,12 +45,13 @@ public class FerramentaDAO {
     //Retorna o maior ID de um aluno
     public int maiorID() {
         int maiorID = 0;
-        try {
-            Statement stmt = this.getConexao().createStatement();
-            ResultSet res = stmt.executeQuery("SELECT MAX(id) id FROM tb_alunos");
-            res.next();
+        try (Connection conexao = ConexaoBd.getConnection();
+            Statement stmt = conexao.createStatement();
+            ResultSet res = stmt.executeQuery("SELECT MAX(id) AS id FROM ferramentas")) {
+            
+            if (res.next()) {
             maiorID = res.getInt("id");
-            stmt.close();
+            }
         } catch (SQLException ex) {
             System.out.println("Erro: " + ex);
         }
