@@ -43,10 +43,7 @@ public class FerramentaDAO {
         return minhaLista;
     }
 
-    public void setMinhaLista(ArrayList<Ferramenta> minhaLista) {
-        this.minhaLista = minhaLista;
-    }
-
+   
     //Retorna o maior ID de um aluno
     public int maiorID() {
         int maiorID = 0;
