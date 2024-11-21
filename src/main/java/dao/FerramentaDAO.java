@@ -94,26 +94,26 @@ public class FerramentaDAO {
     }
 
     //Atualiza ferramenta na bd
-    public boolean atualizaFerramentaBD(Ferramenta objeto) {
+    public boolean atualizaFerramentaBD(Ferramenta ferramenta) {
 
-        String sql = "UPDATE tb_ferramentas set nome = ? ,marca = ? ,preco = ? WHERE id = ?";
+        String sql = "UPDATE ferramentas SET nome = ? ,marca = ? ,preco = ? WHERE id = ?";
 
-        try {
-            PreparedStatement stmt = this.getConexao().prepareStatement(sql);
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setString(1, objeto.getNome());
-            stmt.setString(2, objeto.getMarca());
-            stmt.setDouble(3, objeto.getPreco());
-            stmt.setInt(5, objeto.getId());
+            stmt.setString(1, ferramenta.getNome());
+            stmt.setString(2, ferramenta.getMarca());
+            stmt.setDouble(3, ferramenta.getPreco());
+            stmt.setInt(4, ferramenta.getId());
 
-            stmt.execute();
-            stmt.close();
+            stmt.executeUpdate();
+            
 
             return true;
 
         } catch (SQLException erro) {
             System.out.println("Erro:" + erro);
-            throw new RuntimeException(erro);
+            return false;
         }
     }
     //Carrega ferramenta pelo ID
