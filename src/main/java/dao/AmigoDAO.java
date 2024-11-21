@@ -53,5 +53,22 @@ public class AmigoDAO {
     }
     
     
-    
+    //Insere Amigo na db
+    public boolean insereAmigoBD(Amigo amigo) {
+        String sql = "INSERT INTO amigos(id,nome_amigo,telefone) VALUES(?,?,?)";
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, amigo.getId());
+            stmt.setString(2, amigo.getNome());
+            stmt.setString(3, amigo.getTelefone());
+
+            stmt.execute();
+
+            return true;
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+            return false;
+        }
+    }
 }

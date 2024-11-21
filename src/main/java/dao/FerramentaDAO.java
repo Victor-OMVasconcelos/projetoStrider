@@ -53,7 +53,7 @@ public class FerramentaDAO {
     }
 
     
-    //Insere Amigo na db
+    //Insere Ferramenta na db
     public boolean insereFerramentaBD(Ferramenta ferramenta) {
         String sql = "INSERT INTO ferramentas(id,nome_ferramentas,marca,preco) VALUES(?,?,?,?)";
         try (Connection conexao = ConexaoBd.getConnection();
