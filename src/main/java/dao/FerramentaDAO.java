@@ -1,10 +1,6 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import modelo.Ferramenta;
 
@@ -118,22 +114,22 @@ public class FerramentaDAO {
     }
     //Carrega ferramenta pelo ID
     public Ferramenta carregaFerramenta(int id) {
-        Ferramenta objeto = new Ferramenta();
-        objeto.setId(id);
-        try {
-            Statement stmt = this.getConexao().createStatement();
-
-            ResultSet res = stmt.executeQuery("SELECT * FROM tb_ferramentas");
-            res.next();
-
-            objeto.setNome(res.getString("nome"));
-            objeto.setMarca(res.getString("marca"));
-            objeto.setPreco(res.getDouble("preco"));
-            
-            stmt.close();
+        Ferramenta ferramenta = null;
+        String sql = "SELECT * FROM ferramentas WHERE id = ?";
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1,id);
+            try (ResultSet res = stmt.executeQuery()) {
+                if (res.next()) {
+                    String nome = res.getString("nome");
+                    String marca = res.getString("marca");
+                    double preco = res.getDouble("preco");
+                    ferramenta = new Ferramenta(id, nome, marca, preco);
+                }
+            }
         } catch (SQLException erro) {
             System.out.println("Erro:" + erro);
         }
-        return objeto;
+        return ferramenta;
     }
 }
