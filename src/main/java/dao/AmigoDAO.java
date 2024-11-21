@@ -71,4 +71,21 @@ public class AmigoDAO {
             return false;
         }
     }
+    
+    
+    //Deleta um amigo da bd
+    public boolean deletaAmigoBD(int id) {
+        String sql = " DELETE FROM amigos WHERE ID = ?";
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            
+            return true;
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+            return false;
+        }
+    }
 }
