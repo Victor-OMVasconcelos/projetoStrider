@@ -5,6 +5,7 @@
 package visao;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Amigo;
@@ -15,7 +16,7 @@ import modelo.Amigo;
  */
 public class FrmGerenciarAmigos extends javax.swing.JFrame {
 
-    private Amigo objetoAmigo; // cria vÃnculo com Amigo
+    private Amigo objetoAmigo; // cria vínculo com Amigo
 
     /**
      * Creates new form FrmGerenciarAmigos
@@ -200,7 +201,7 @@ public class FrmGerenciarAmigos extends javax.swing.JFrame {
             }
 
             // envia os dados para a Ferramenta processar
-            if (this.objetoAmigo.atualizaFerramentaBD(id, nome, marca, preco)) {
+            if (this.objetoAmigo.atualizaAmigoBD(id, nome, marca, preco)) {
                 // limpa os campos
                 this.JTFNomeAmigo.setText("");
                 this.JTFTelefone.setText("");
@@ -235,7 +236,7 @@ public class FrmGerenciarAmigos extends javax.swing.JFrame {
 
             if (respostaUsuario == 0) {// clicou em SIM
                 // envia os dados para o Aluno processar
-                if (this.objetoAmigo.deletaFerramentaBD(id)) {
+                if (this.objetoAmigo.deletaAmigoBD(id)) {
                     // limpa os campos
                     this.JTFNomeAmigo.setText("");
                     this.JTFTelefone.setText("");
@@ -275,17 +276,20 @@ public class FrmGerenciarAmigos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_JTFTelefoneActionPerformed
 
-    public void carregaTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) this.JTableAmigos.getModel();
-        modelo.setNumRows(0);
-        ArrayList<Amigo> minhaLista = objetoAmigo.getMinhaLista();
-        for (Amigo a : minhaLista) {
-            modelo.addRow(new Object[]{
-                a.getId(),
-                a.getNome(),
-                a.getTelefone(),
-                a.getQuantidadeItens()
-            });
+    private void carregaTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) JTableAmigos.getModel();
+        modelo.setRowCount(0); // Limpa a tabela antes de carregar
+
+        // Obtenha a lista de amigos
+        List<Amigo> minhaLista = objetoAmigo.getMinhaLista();
+
+        // Verifique se a lista não é nula
+        if (minhaLista != null) {
+            for (Amigo amigo : minhaLista) {
+                modelo.addRow(new Object[]{amigo.getId(), amigo.getNome(), amigo.getTelefone()});
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nenhum amigo encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
