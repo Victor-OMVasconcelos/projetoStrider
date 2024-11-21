@@ -1,8 +1,6 @@
 package dao;
 
-import dao.ConexaoBd;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -81,15 +79,18 @@ public class FerramentaDAO {
 
     //Deleta uma ferramenta da bd
     public boolean deletaFerramentaBD(int id) {
-        try {
-            Statement stmt = this.getConexao().createStatement();
-            stmt.executeUpdate("DELETE FROM tb_ferramentas WHERE id = " + id);
-            stmt.close();
-
+        String sql = " DELETE FROM ferramentas WHERE ID = ?";
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            
+            return true;
         } catch (SQLException erro) {
             System.out.println("Erro:" + erro);
+            return false;
         }
-        return true;
     }
 
     //Atualiza ferramenta na bd
