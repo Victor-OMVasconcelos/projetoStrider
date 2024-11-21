@@ -4,6 +4,11 @@
  */
 package visao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joaov
@@ -39,6 +44,11 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
         jLabel1.setText("Nome do Amigo(a):");
 
         JBCadastrar.setText("Cadastrar");
+        JBCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadastrarActionPerformed(evt);
+            }
+        });
 
         JTFTelefone.setText("(DDD) _ _ _ _ _ -_ _ _ _");
         JTFTelefone.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,6 +140,67 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
         JTFTelefone.setText("");
     }//GEN-LAST:event_JTFTelefoneMouseClicked
 
+    private void JBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadastrarActionPerformed
+        Connection conexao = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            // Obtenção dos dados do formulário
+            String nome = JTFNomeAmigo.getText().trim();
+            String telefone = JTFTelefone.getText().trim();
+
+            // Validação dos campos
+            if (nome.isEmpty() || telefone.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Conexão com o banco de dados
+            String url = "jdbc:mysql://localhost:3306/strider_db"; // Atualize com o nome da sua base
+            String usuario = "user_remoto"; // Atualize com seu usuário
+            String senha = "acesso_remoto_jocavi"; // Atualize com sua senha
+            conexao = DriverManager.getConnection(url, usuario, senha);
+
+            // Comando SQL para inserir os dados
+            String sql = "INSERT INTO amigos (nome, telefone) VALUES (?, ?, ?)";
+            pstmt = conexao.prepareStatement(sql);
+
+            // Configuração dos valores
+            pstmt.setString(1, nome);
+            pstmt.setString(2, telefone);
+
+            // Executa o comando SQL
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            // Confirmação para o usuário
+            if (linhasAfetadas > 0) {
+                JOptionPane.showMessageDialog(this, "Amigo cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            // Limpa os campos do formulário
+            JTFNomeAmigo.setText("");
+            JTFTelefone.setText("");
+
+            // Atualiza a tabela (se você carrega os dados diretamente da base)
+            carregaTabela();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar amigo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                // Fecha os recursos
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conexao != null) {
+                    conexao.close();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_JBCadastrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -174,4 +245,8 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
+    private void carregaTabela() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
