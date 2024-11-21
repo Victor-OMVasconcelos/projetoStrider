@@ -88,4 +88,30 @@ public class AmigoDAO {
             return false;
         }
     }
+    
+    
+   //Atualiza amigo na bd
+    public boolean atualizaAmigoBD(Amigo amigo) {
+
+        String sql = "UPDATE amigos SET nome_amigo = ? ,telefone = ? WHERE id = ?";
+
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, amigo.getNome());
+            stmt.setString(2, amigo.getTelefone());
+            stmt.setInt(3, amigo.getId());
+
+            stmt.executeUpdate();
+            
+
+            return true;
+
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+            return false;
+        }
+    }
+    
+    
 }
