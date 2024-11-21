@@ -36,7 +36,7 @@ public class FerramentaDAO {
     }
 
    
-    //Retorna o maior ID de um aluno
+    //Retorna o maior ID de um amigo
     public int maiorID() {
         int maiorID = 0;
         try (Connection conexao = ConexaoBd.getConnection();
@@ -53,7 +53,7 @@ public class FerramentaDAO {
     }
 
     
-    //Insere Ferramenta na db
+    //Insere Amigo na db
     public boolean insereFerramentaBD(Ferramenta ferramenta) {
         String sql = "INSERT INTO ferramentas(id,nome_ferramentas,marca,preco) VALUES(?,?,?,?)";
         try (Connection conexao = ConexaoBd.getConnection();
