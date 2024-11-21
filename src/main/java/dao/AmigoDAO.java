@@ -53,7 +53,7 @@ public class AmigoDAO {
     }
     
     
-    //Insere Amigo na db
+    //Insere amigo na db
     public boolean insereAmigoBD(Amigo amigo) {
         String sql = "INSERT INTO amigos(id,nome_amigo,telefone) VALUES(?,?,?)";
         try (Connection conexao = ConexaoBd.getConnection();
@@ -114,4 +114,23 @@ public class AmigoDAO {
     }
     
     
+    //Carrega amigo pelo ID
+    public Amigo carregaAmigo(int id) {
+        Amigo amigo = null;
+        String sql = "SELECT * FROM amigos WHERE id = ?";
+        try (Connection conexao = ConexaoBd.getConnection();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1,id);
+            try (ResultSet res = stmt.executeQuery()) {
+                if (res.next()) {
+                    String nome = res.getString("nome_amigo");
+                    String telefone = res.getString("telefone");
+                    amigo = new Amigo(id, nome,telefone);
+                }
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+        }
+        return amigo;
+    }
 }
