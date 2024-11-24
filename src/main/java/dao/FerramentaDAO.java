@@ -27,7 +27,7 @@ public class FerramentaDAO {
 
             while (res.next()) {
                 int id = res.getInt("id");
-                String nome = res.getString("nome_ferramenta");
+                String nome = res.getString("nome");
                 String marca = res.getString("marca");
                 double preco = res.getDouble("preco");
 
@@ -65,7 +65,7 @@ public class FerramentaDAO {
      * @return true se a inserção for bem-sucedida, false caso contrário.
      */
     public boolean insereFerramentaBD(Ferramenta ferramenta) {
-        String sql = "INSERT INTO ferramenta(id, nome_ferramenta, marca, preco) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO ferramenta(id, nome, marca, preco) VALUES(?,?,?,?)";
         try (Connection conexao = ConexaoBd.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             stmt.setInt(1, ferramenta.getId());
@@ -108,7 +108,7 @@ public class FerramentaDAO {
      * @return true se a atualização for bem-sucedida, false caso contrário.
      */
     public boolean atualizaFerramentaBD(Ferramenta ferramenta) {
-        String sql = "UPDATE ferramenta SET nome_ferramenta = ?, marca = ?, preco = ? WHERE id = ?";
+        String sql = "UPDATE ferramenta SET nome = ?, marca = ?, preco = ? WHERE id = ?";
         try (Connection conexao = ConexaoBd.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             stmt.setString(1, ferramenta.getNome());
@@ -138,7 +138,7 @@ public class FerramentaDAO {
             stmt.setInt(1, id);
             try (ResultSet res = stmt.executeQuery()) {
                 if (res.next()) {
-                    String nome = res.getString("nome_ferramenta");
+                    String nome = res.getString("nome");
                     String marca = res.getString("marca");
                     double preco = res.getDouble("preco");
                     ferramenta = new Ferramenta(id, nome, marca, preco);
