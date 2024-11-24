@@ -101,6 +101,10 @@ public class Ferramenta {
             System.out.println("Erro: Nome da ferramenta não pode ser vazio.");
             return false;
         }
+        if (marca == null || marca.isEmpty()) {
+            System.out.println("Erro: Marca não pode ser vazia, colocar sem marca invés disso.");
+            return false;
+        }
         if (preco <= 0) {
             System.out.println("Erro: O preço da ferramenta deve ser maior que zero.");
             return false;
