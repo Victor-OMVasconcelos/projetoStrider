@@ -40,8 +40,6 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         JTFNomeAmigo = new javax.swing.JTextField();
         JBLimpar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        JTFQuantidadeItens = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,10 +80,6 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Quantidade de itens:");
-
-        JTFQuantidadeItens.setText("0");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,29 +87,21 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTFTelefone)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(JTFQuantidadeItens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JTFNomeAmigo)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JTFTelefone)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(JTFNomeAmigo)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(JBFechar)
-                                        .addGap(62, 62, 62)
-                                        .addComponent(JBLimpar)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                                .addComponent(JBCadastrar)))
-                        .addGap(23, 23, 23))))
+                                .addComponent(JBFechar)
+                                .addGap(62, 62, 62)
+                                .addComponent(JBLimpar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                        .addComponent(JBCadastrar)))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +114,7 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(JTFTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(JTFQuantidadeItens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBFechar)
                     .addComponent(JBLimpar)
@@ -186,7 +168,6 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
                 // Limpa os campos após o cadastro
                 this.JTFNomeAmigo.setText("");
                 this.JTFTelefone.setText("");
-                this.JTFQuantidadeItens.setText("");
             }
             // Exibe no console a lista de amigos cadastradas
             System.out.println(this.objetoamigo.getMinhaLista().toString());
@@ -238,11 +219,9 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
     private javax.swing.JButton JBFechar;
     private javax.swing.JButton JBLimpar;
     private javax.swing.JTextField JTFNomeAmigo;
-    private javax.swing.JTextField JTFQuantidadeItens;
     private javax.swing.JTextField JTFTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 
 }
