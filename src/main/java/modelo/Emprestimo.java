@@ -1,12 +1,14 @@
 package modelo;
 
-/**
- *
- * @author joaov
- */
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Representa um empréstimo de ferramentas a um amigo com data de empréstimo e devolução.
+ * Permite registrar o amigo, as ferramentas emprestadas e as datas de empréstimo e devolução.
+ * 
+ * @author joaov
+ */
 public class Emprestimo {
 
     private int id;
@@ -15,14 +17,19 @@ public class Emprestimo {
     private Date dataEmprestimo;
     private Date dataDevolucao;
 
+    /**
+     * Construtor para inicializar o empréstimo com id, amigo, ferramentas e data de empréstimo.
+     * A data de devolução é inicialmente nula.
+     */
     public Emprestimo(int id, Amigo amigo, List<Ferramenta> ferramentas, Date dataEmprestimo) {
         this.id = id;
         this.amigo = amigo;
         this.ferramentas = ferramentas;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = null; 
+        this.dataDevolucao = null; // Devolução não ocorre no momento do empréstimo
     }
 
+    // Métodos getter e setter
     public int getId() {
         return id;
     }
@@ -59,13 +66,26 @@ public class Emprestimo {
         return dataDevolucao;
     }
 
-    public void devolverFerramentas(Date dataDevolucao) {
+    /**
+     * Método para registrar a devolução das ferramentas. 
+     * Valida se a data de devolução não é anterior à data de empréstimo.
+     * 
+     * @param dataDevolucao A data em que as ferramentas são devolvidas.
+     * @return true se a devolução for válida, caso contrário false.
+     */
+    public boolean devolverFerramentas(Date dataDevolucao) {
+        if (dataDevolucao.before(this.dataEmprestimo)) {
+            System.out.println("Erro: Data de devolução não pode ser anterior à data de empréstimo.");
+            return false;
+        }
         this.dataDevolucao = dataDevolucao;
+        return true; // Devolução válida
     }
 
     @Override
     public String toString() {
+        String devolucao = (dataDevolucao != null) ? dataDevolucao.toString() : "Não devolvido";
         return "Emprestimo [ID=" + id + ", Amigo=" + amigo.getNome() + ", Ferramentas=" + ferramentas.size()
-                + ", Data Emprestimo=" + dataEmprestimo + ", Data Devolucao=" + dataDevolucao + "]";
+                + ", Data Emprestimo=" + dataEmprestimo + ", Data Devolucao=" + devolucao + "]";
     }
 }
