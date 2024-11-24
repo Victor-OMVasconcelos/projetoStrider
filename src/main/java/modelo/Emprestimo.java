@@ -88,4 +88,8 @@ public class Emprestimo {
         return "Emprestimo [ID=" + id + ", Amigo=" + amigo.getNome() + ", Ferramentas=" + ferramentas.size()
                 + ", Data Emprestimo=" + dataEmprestimo + ", Data Devolucao=" + devolucao + "]";
     }
+
+    public void setDataDevolucao(Date dataDevolucao) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
