@@ -16,7 +16,7 @@ public class ConexaoBd {
     private static final String USER = "root"; // Corrigido a sintaxe do usuário
 
     // Senha para autenticação no banco de dados
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "Joaovitor2005*!";
 
     /**
      * Estabelece a conexão com o banco de dados.
