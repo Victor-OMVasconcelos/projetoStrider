@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import modelo.Amigo;
 
 /**
  * Interface para cadastro de Amigos no mySQL.
@@ -11,12 +12,16 @@ import javax.swing.JOptionPane;
  * @author joaov
  */
 public class FrmCadastroAmigo extends javax.swing.JFrame {
-
+    //Atributo para armazenar amigo
+    private Amigo objetoamigo;
+    
     /**
-     * Creates new form FrmCadastroAmigo
+     * Construtor da classe que inicializa a interface gráfica e cria um objeto
+     * Amigo.
      */
     public FrmCadastroAmigo() {
         initComponents();
+        this.objetoamigo = new Amigo();
     }
 
     /**
@@ -139,60 +144,37 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
     }//GEN-LAST:event_JTFTelefoneMouseClicked
 
     private void JBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadastrarActionPerformed
-        Connection conexao = null;
-        PreparedStatement pstmt = null;
+           try {
+            // Recebe e valida os dados da interface gráfica
+            String nome = "";
+            String telefone = "";
 
-        try {
-            // Obtenção dos dados do formulário
-            String nome = JTFNomeAmigo.getText().trim();
-            String telefone = JTFTelefone.getText().trim();
-
-            // Validação dos campos
-            if (nome.isEmpty() || telefone.isEmpty() || telefone.equals("(DDD) _ _ _ _ _ -_ _ _ _")) {
-                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos corretamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
+            if (this.JTFNomeAmigo.getText().length() < 2) {
+                throw new Mensagem("Nome do amigo deve conter ao menos 2 caracteres.");
+            } else {
+                nome = this.JTFNomeAmigo.getText();
             }
 
-            // Conexão com o banco de dados
-            String url = "jdbc:mysql://localhost:3306/strider_db"; // Atualize com o nome da sua base
-            String usuario = "user_remoto"; // Atualize com seu usuário
-            String senha = "acesso_remoto_jocavi"; // Atualize com sua senha
-            conexao = DriverManager.getConnection(url, usuario, senha);
-
-            // Comando SQL para inserir os dados
-            String sql = "INSERT INTO amigos (nome, telefone) VALUES (?, ?)";
-            pstmt = conexao.prepareStatement(sql);
-
-            // Configuração dos valores
-            pstmt.setString(1, nome);
-            pstmt.setString(2, telefone.replaceAll("[^0-9]", "")); // Remove os caracteres não numéricos do telefone
-
-            // Executa o comando SQL
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            // Confirmação para o usuário
-            if (linhasAfetadas > 0) {
-                JOptionPane.showMessageDialog(this, "Amigo cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            if (this.JTFTelefone.getText().length() < 11) {
+                throw new Mensagem("Telefone inválido.");
+            } else {
+                this.JTFTelefone.getText();
             }
 
-            // Limpa os campos do formulário
-            JTFNomeAmigo.setText("");
-            JTFTelefone.setText("(DDD) _ _ _ _ _ -_ _ _ _");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao cadastrar amigo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                // Fecha os recursos
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conexao != null) {
-                    conexao.close();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            // Envia os dados para o controlador para o cadastro
+            if (this.objetoamigo.insereAmigoBD(nome, telefone)) {
+                JOptionPane.showMessageDialog(null, "Amigo cadastrado com sucesso!");
+                // Limpa os campos após o cadastro
+                this.JTFNomeAmigo.setText("");
+                this.JTFTelefone.setText("");
             }
+            // Exibe no console a lista de amigos cadastradas
+            System.out.println(this.objetoamigo.getMinhaLista().toString());
+
+        } catch (Mensagem erro) {
+            JOptionPane.showMessageDialog(null, erro.getMessage());
+        } catch (NumberFormatException erro2) {
+            JOptionPane.showMessageDialog(null, "Informe um número válido.");
         }
     }//GEN-LAST:event_JBCadastrarActionPerformed
 
