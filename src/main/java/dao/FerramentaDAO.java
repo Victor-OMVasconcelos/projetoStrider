@@ -23,7 +23,7 @@ public class FerramentaDAO {
     public ArrayList<Ferramenta> getMinhaLista() {
         minhaLista.clear(); // Limpa a lista antes de atualizar com dados novos.
 
-        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT * FROM ferramentas")) {
+        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT * FROM ferramenta")) {
 
             while (res.next()) {
                 int id = res.getInt("id");
@@ -47,7 +47,7 @@ public class FerramentaDAO {
      */
     public int maiorID() {
         int maiorID = 0;
-        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT MAX(id) AS id FROM ferramentas")) {
+        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT MAX(id) AS id FROM ferramenta")) {
 
             if (res.next()) {
                 maiorID = res.getInt("id");
@@ -65,7 +65,7 @@ public class FerramentaDAO {
      * @return true se a inserção for bem-sucedida, false caso contrário.
      */
     public boolean insereFerramentaBD(Ferramenta ferramenta) {
-        String sql = "INSERT INTO ferramentas(id, nome_ferramenta, marca, preco) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO ferramenta(id, nome_ferramenta, marca, preco) VALUES(?,?,?,?)";
         try (Connection conexao = ConexaoBd.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             stmt.setInt(1, ferramenta.getId());
@@ -89,7 +89,7 @@ public class FerramentaDAO {
      * @return true se a deleção for bem-sucedida, false caso contrário.
      */
     public boolean deletaFerramentaBD(int id) {
-        String sql = "DELETE FROM ferramentas WHERE ID = ?";
+        String sql = "DELETE FROM ferramenta WHERE ID = ?";
         try (Connection conexao = ConexaoBd.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -108,7 +108,7 @@ public class FerramentaDAO {
      * @return true se a atualização for bem-sucedida, false caso contrário.
      */
     public boolean atualizaFerramentaBD(Ferramenta ferramenta) {
-        String sql = "UPDATE ferramentas SET nome_ferramenta = ?, marca = ?, preco = ? WHERE id = ?";
+        String sql = "UPDATE ferramenta SET nome_ferramenta = ?, marca = ?, preco = ? WHERE id = ?";
         try (Connection conexao = ConexaoBd.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             stmt.setString(1, ferramenta.getNome());
@@ -133,7 +133,7 @@ public class FerramentaDAO {
      */
     public Ferramenta carregaFerramenta(int id) {
         Ferramenta ferramenta = null;
-        String sql = "SELECT * FROM ferramentas WHERE id = ?";
+        String sql = "SELECT * FROM ferramenta WHERE id = ?";
         try (Connection conexao = ConexaoBd.getConnection(); PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet res = stmt.executeQuery()) {
