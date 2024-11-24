@@ -9,7 +9,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 /**
- *
+ * Tela de exibição dos créditos do projeto.
+ * Exibe os créditos dos desenvolvedores e um botão de fechamento.
+ * 
  * @author joaov
  */
 public class Credito extends JFrame {
@@ -18,26 +20,28 @@ public class Credito extends JFrame {
         // Configurações do JFrame
         setTitle("Créditos");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fecha apenas a janela
 
-        // Criação do JTextPane
+        // Criação do JTextPane para exibição dos créditos
         JTextPane textPane = new JTextPane();
         textPane.setText("""
-                         Cr\u00e9ditos
+                         Créditos
 
                          Este projeto foi desenvolvido por:
 
-                         Jo\u00e3o Vitor Ferraz de Camargo
+                         João Vitor Ferraz de Camargo
                          Cauan da Silva dos Santos
                          Victor Oliveira Morais de Vasconcelos
-                         Agradecemos a todos os envolvidos e aos que contribu\u00edram para a realiza\u00e7\u00e3o deste trabalho.""");
+                         
+                         Agradecemos a todos os envolvidos e aos que contribuíram para a realização deste trabalho.""");
 
-        textPane.setEditable(false);
+        textPane.setEditable(false); // Desabilita a edição do texto
 
+        // Coloca o JTextPane dentro de um JScrollPane para permitir rolagem
         JScrollPane scrollPane = new JScrollPane(textPane);
-
         add(scrollPane, BorderLayout.CENTER);
 
+        // Criação do botão "Fechar"
         JButton btnFechar = new JButton("Fechar");
         btnFechar.addActionListener(new ActionListener() {
             @Override
@@ -46,15 +50,24 @@ public class Credito extends JFrame {
             }
         });
 
-        // Adicionando o botão na parte inferior do JFrame
+        // Adiciona o botão ao rodapé do JFrame
         add(btnFechar, BorderLayout.SOUTH);
+        
+        // Define a localização da janela
         setLocation(200, 100);
+        
+        // Exibe a janela
         setVisible(true);
     }
 
+    // Esse método pode ser removido se não for necessário
     public static JTextPane criarCreditos() {
         JTextPane textPane = new JTextPane();
         return textPane;
     }
 
+    public static void main(String[] args) {
+        // Criação da janela de créditos ao iniciar o programa
+        new Credito();
+    }
 }
