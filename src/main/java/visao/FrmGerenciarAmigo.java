@@ -279,7 +279,7 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
         // Verifique se a lista não é nula
         if (minhaLista != null) {
             for (Amigo amigo : minhaLista) {
-                modelo.addRow(new Object[]{amigo.getId(), amigo.getNome(), amigo.getTelefone()});
+                modelo.addRow(new Object[]{amigo.getId(), amigo.getNome(), amigo.getTelefone(), amigo.getItem()});
             }
         } else {
             JOptionPane.showMessageDialog(this, "Nenhum amigo encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
