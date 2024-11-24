@@ -22,10 +22,11 @@
 DROP TABLE IF EXISTS `amigos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `amigos` (
+CREATE TABLE `amigo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome_amigo` varchar(100) DEFAULT NULL,
   `telefone` varchar(15) DEFAULT NULL,
+  `item` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +38,7 @@ CREATE TABLE `amigos` (
 DROP TABLE IF EXISTS `emprestimos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `emprestimos` (
+CREATE TABLE `emprestimo` (
   `id` int NOT NULL,
   `ferramenta_emprestada` varchar(100) DEFAULT NULL,
   `amigo_emprestado` varchar(100) DEFAULT NULL,
@@ -54,7 +55,7 @@ CREATE TABLE `emprestimos` (
 DROP TABLE IF EXISTS `ferramentas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ferramentas` (
+CREATE TABLE `ferramenta` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome_ferramenta` varchar(100) DEFAULT NULL,
   `marca` varchar(50) DEFAULT NULL,
