@@ -1,43 +1,47 @@
 package visao;
 
-/**
- *
- * @author joaov
- */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Tela de exibição das informações sobre o software.
+ * Exibe uma descrição detalhada do sistema e um botão de fechamento.
+ * 
+ * @author joaov
+ */
 public class Descricao extends JFrame {
+
+    private static final String DESCRICAO_TEXTO = """
+                         Este é um software simples e local para gerenciar o empréstimo de ferramentas para amigos. Ele permite que o usuário cadastre ferramentas e amigos, registre os empréstimos e acompanhe as devoluções. As funcionalidades principais incluem:
+                         
+                         Cadastro de Ferramentas: O usuário pode cadastrar ferramentas, inserindo informações como o nome, marca e custo de aquisição.
+                         
+                         Cadastro de Amigos: Permite o cadastro de amigos, incluindo nome e telefone, que serão os destinatários dos empréstimos.
+                         
+                         Registro de Empréstimos: O sistema permite registrar um empréstimo para um amigo específico, escolhendo uma ou mais ferramentas e definindo a data de empréstimo e uma data de devolução.
+                         
+                         Relatórios e Acompanhamento: O software oferece um relatório de todas as ferramentas cadastradas, incluindo o total gasto em aquisições, além de relatórios de empréstimos ativos e de todos os empréstimos realizados. Também exibe um alerta caso algum amigo já possua ferramentas em aberto, ajudando no controle dos empréstimos.
+                         
+                         Este sistema simples é ideal para uso pessoal e local, facilitando o acompanhamento de empréstimos de ferramentas para evitar perdas e monitorar as devoluções.""";
 
     public Descricao() {
         // Configurações do JFrame
         setTitle("Informações sobre o software");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fechar apenas a janela
 
-        // Criação do JTextPane
+        // Criação do JTextPane para exibição da descrição
         JTextPane textPane = new JTextPane();
-        textPane.setText("""
-                         Este \u00e9 um software simples e local para gerenciar o empr\u00e9stimo de ferramentas para amigos. Ele permite que o usu\u00e1rio cadastre ferramentas e amigos, registre os empr\u00e9stimos e acompanhe as devolu\u00e7\u00f5es. As funcionalidades principais incluem:
-                         
-                         Cadastro de Ferramentas: O usu\u00e1rio pode cadastrar ferramentas, inserindo informa\u00e7\u00f5es como o nome, marca e custo de aquisi\u00e7\u00e3o.
-                         
-                         Cadastro de Amigos: Permite o cadastro de amigos, incluindo nome e telefone, que ser\u00e3o os destinat\u00e1rios dos empr\u00e9stimos.
-                         
-                         Registro de Empr\u00e9stimos: O sistema permite registrar um empr\u00e9stimo para um amigo espec\u00edfico, escolhendo uma ou mais ferramentas e definindo a data de empr\u00e9stimo e uma data de devolu\u00e7\u00e3o.
-                         
-                         Relat\u00f3rios e Acompanhamento: O software oferece um relat\u00f3rio de todas as ferramentas cadastradas, incluindo o total gasto em aquisi\u00e7\u00f5es, al\u00e9m de relat\u00f3rios de empr\u00e9stimos ativos e de todos os empr\u00e9stimos realizados. Tamb\u00e9m exibe um alerta caso algum amigo j\u00e1 possua ferramentas em aberto, ajudando no controle dos empr\u00e9stimos.
-                         
-                         Este sistema simples \u00e9 ideal para uso pessoal e local, facilitando o acompanhamento de empr\u00e9stimos de ferramentas para evitar perdas e monitorar as devolu\u00e7\u00f5es.""");
-        
-        textPane.setEditable(false);
-        
+        textPane.setText(DESCRICAO_TEXTO);
+        textPane.setEditable(false); // Desabilita a edição do texto
+
+        // Coloca o JTextPane dentro de um JScrollPane para permitir rolagem
         JScrollPane scrollPane = new JScrollPane(textPane);
-        
         add(scrollPane, BorderLayout.CENTER);
-        
+
+        // Criação do botão "Fechar"
         JButton btnFechar = new JButton("Fechar");
         btnFechar.addActionListener(new ActionListener() {
             @Override
@@ -46,15 +50,18 @@ public class Descricao extends JFrame {
             }
         });
 
-        // Adicionando o botão na parte inferior do JFrame
+        // Adiciona o botão ao rodapé do JFrame
         add(btnFechar, BorderLayout.SOUTH);
+        
+        // Define a localização da janela
         setLocation(200, 100);
+        
+        // Exibe a janela
         setVisible(true);
     }
 
-    public static JTextPane criarDescricao() {
-        JTextPane textPane = new JTextPane();
-        return textPane;
+    public static void main(String[] args) {
+        // Criação da janela de descrição ao iniciar o programa
+        new Descricao();
     }
-
 }
