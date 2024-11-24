@@ -109,6 +109,9 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(JTableAmigos);
+        if (JTableAmigos.getColumnModel().getColumnCount() > 0) {
+            JTableAmigos.getColumnModel().getColumn(3).setHeaderValue("Itens");
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,7 +174,7 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
             int id = 0;
             String nome = "";
             String telefone = "";
-            double quantidadeItens = 0.0;
+            int item = 0;
 
             if (this.JTFNomeAmigo.getText().length() < 2) {
                 throw new Exception("Nome do amigo deve conter ao menos 2 caracteres!");
@@ -188,7 +191,7 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
             if (this.JTFQuantidadeItens.getText().length() <= 0) {
                 throw new Exception("Quantidade de itens deve ser numérica e maior que 0!");
             } else {
-                quantidadeItens = Double.parseDouble(this.JTFQuantidadeItens.getText());
+                item = Integer.parseInt(this.JTFQuantidadeItens.getText());
             }
 
             if (this.JTableAmigos.getSelectedRow() == -1) {
@@ -198,7 +201,7 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
             }
 
             // Envia os dados para a atualização do amigo
-            if (this.objetoAmigo.atualizaAmigoBD(id, nome, telefone)) {
+            if (this.objetoAmigo.atualizaAmigoBD(id, nome, telefone, item)) {
                 // Limpa os campos
                 this.JTFNomeAmigo.setText("");
                 this.JTFTelefone.setText("");
@@ -233,7 +236,7 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
                     this.JTFNomeAmigo.setText("");
                     this.JTFTelefone.setText("");
                     this.JTFQuantidadeItens.setText("");
-                    JOptionPane.showMessageDialog(rootPane, "Ferramenta apagada com sucesso!");
+                    JOptionPane.showMessageDialog(rootPane, "Amigo apagado com sucesso!");
                 }
             }
             // atualiza a tabela.
@@ -305,9 +308,4 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    private class JTFNome {
-
-        public JTFNome() {
-        }
-    }
 }
