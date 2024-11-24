@@ -145,7 +145,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDescricaoActionPerformed
         Descricao descricao = new Descricao();
-        Descricao.criarDescricao();
+        descricao.setVisible(true);
     }//GEN-LAST:event_jMenuItemDescricaoActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
@@ -158,7 +158,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemLicencaActionPerformed
 
     private void jMenuItemCreditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCreditosActionPerformed
-        Creditos creditos = new Creditos();
+        Credito creditos = new Credito();
         creditos.criarCreditos();
     }//GEN-LAST:event_jMenuItemCreditosActionPerformed
 
@@ -175,7 +175,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCadastrarAmigoActionPerformed
 
     private void jMenuItemGerenciarAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGerenciarAmigosActionPerformed
-        FrmGerenciarAmigos objeto = new FrmGerenciarAmigos();
+        FrmGerenciarAmigo objeto = new FrmGerenciarAmigo();
         objeto.setLocation(200, 200);
         objeto.setVisible(true);
     }//GEN-LAST:event_jMenuItemGerenciarAmigosActionPerformed
