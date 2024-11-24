@@ -1,7 +1,5 @@
 package visao;
 
-import dao.AmigoDAO;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -259,11 +257,11 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
         if (this.JTableAmigos.getSelectedRow() != -1) {
             String nome = this.JTableAmigos.getValueAt(this.JTableAmigos.getSelectedRow(), 1).toString();
             String telefone = this.JTableAmigos.getValueAt(this.JTableAmigos.getSelectedRow(), 2).toString();
-            String quantidadeItens = this.JTableAmigos.getValueAt(this.JTableAmigos.getSelectedRow(), 3).toString();
+            String item = this.JTableAmigos.getValueAt(this.JTableAmigos.getSelectedRow(), 3).toString();
 
             this.JTFNomeAmigo.setText(nome);
             this.JTFTelefone.setText(telefone);
-            this.JTFQuantidadeItens.setText(quantidadeItens);
+            this.JTFQuantidadeItens.setText(item);
         }
     }//GEN-LAST:event_JTableAmigosMouseClicked
 
