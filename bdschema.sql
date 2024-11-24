@@ -19,12 +19,12 @@
 -- Table structure for table `amigos`
 --
 
-DROP TABLE IF EXISTS `amigos`;
+DROP TABLE IF EXISTS `amigo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `amigo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nome_amigo` varchar(100) DEFAULT NULL,
+  `nome` varchar(100) DEFAULT NULL,
   `telefone` varchar(15) DEFAULT NULL,
   `item` int DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -52,12 +52,12 @@ CREATE TABLE `emprestimo` (
 -- Table structure for table `ferramentas`
 --
 
-DROP TABLE IF EXISTS `ferramentas`;
+DROP TABLE IF EXISTS `ferramenta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ferramenta` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nome_ferramenta` varchar(100) DEFAULT NULL,
+  `nome` varchar(100) DEFAULT NULL,
   `marca` varchar(50) DEFAULT NULL,
   `preco` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
