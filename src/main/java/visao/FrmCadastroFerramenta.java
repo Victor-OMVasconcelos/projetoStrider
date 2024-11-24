@@ -173,7 +173,7 @@ public class FrmCadastroFerramenta extends javax.swing.JFrame {
             if (this.JTFMarca.getText().length() < 1) {
                 throw new Mensagem("Marca deve ao menos conter 1 caractere.");
             } else {
-                this.JTFMarca.getText();
+                marca = this.JTFMarca.getText();
             }
 
             if (this.JTFPreco.getText().length() <= 0) {
