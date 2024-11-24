@@ -24,8 +24,8 @@ public class AmigoDAO {
 
             while (res.next()) {
                 int id = res.getInt("id");
-                String nome = res.getString("nome_ferramenta");//Lembra colocar informações do amigo da BD
-                String telefone = res.getString("marca");
+                String nome = res.getString("nome_amigo");
+                String telefone = res.getString("telefone");
 
                 Amigo amigo = new Amigo(id, nome, telefone);
                 minhaLista.add(amigo);
@@ -97,7 +97,7 @@ public class AmigoDAO {
         String query = "UPDATE amigos SET nome_amigo = ?, telefone = ? WHERE id = ?";
 
         try (Connection con = ConexaoBd.getConnection(); 
-             PreparedStatement stmt = con.prepareStatement(query)) {
+            PreparedStatement stmt = con.prepareStatement(query)) {
             // Setando os parâmetros da consulta
             stmt.setString(1, amigo.getNome());
             stmt.setString(2, amigo.getTelefone());
