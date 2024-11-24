@@ -152,5 +152,41 @@ public class FerramentaDAO {
         }
         return ferramenta;  // Pode retornar null se não encontrar a ferramenta
     }
+        /**
+    * Gera um relatório de todas as ferramentas disponíveis e o custo total gasto.
+    * 
+    * @return Relatório formatado como String.
+    */
+    public String geraRelatorioFerramentas() {
+        // Recuperar a lista de ferramentas
+        ArrayList<Ferramenta> lista = getMinhaLista(); // Buscar ferramentas do DAO
+
+        // Inicializar o custo total
+        double custoTotal = 0.0;
+
+        // Criar um StringBuilder para formatar o relatório
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("Relatório de Ferramentas Disponíveis:\n");
+        relatorio.append("--------------------------------------\n");
+
+        // Iterar sobre as ferramentas e construir o relatório
+        for (Ferramenta ferramenta : lista) {
+           relatorio.append("ID: ").append(ferramenta.getId())
+                 .append(", Nome: ").append(ferramenta.getNome())
+                 .append(", Marca: ").append(ferramenta.getMarca())
+                 .append(", Preço: R$ ").append(String.format("%.2f", ferramenta.getPreco()))
+                 .append("\n");
+
+            // Adicionar o preço da ferramenta ao custo total
+            custoTotal += ferramenta.getPreco();
+        }
+
+        // Adicionar o custo total ao relatório
+        relatorio.append("--------------------------------------\n");
+        relatorio.append("Custo Total: R$ ").append(String.format("%.2f", custoTotal)).append("\n");
+
+        // Retornar o relatório formatado
+        return relatorio.toString();
+    }
 
 }
