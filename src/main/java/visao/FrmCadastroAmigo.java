@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package visao;
 
 import java.sql.Connection;
@@ -10,6 +6,7 @@ import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 /**
+ * Interface para cadastro de Amigos no mySQL.
  *
  * @author joaov
  */
@@ -133,10 +130,11 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
     }//GEN-LAST:event_JBLimparActionPerformed
 
     private void JTFTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFTelefoneActionPerformed
-        // TODO add your handling code here:
+        // Código para o evento de ação (não utilizado)
     }//GEN-LAST:event_JTFTelefoneActionPerformed
 
     private void JTFTelefoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFTelefoneMouseClicked
+        // Limpa o campo de telefone quando clicado
         JTFTelefone.setText("");
     }//GEN-LAST:event_JTFTelefoneMouseClicked
 
@@ -150,8 +148,8 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
             String telefone = JTFTelefone.getText().trim();
 
             // Validação dos campos
-            if (nome.isEmpty() || telefone.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            if (nome.isEmpty() || telefone.isEmpty() || telefone.equals("(DDD) _ _ _ _ _ -_ _ _ _")) {
+                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos corretamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -162,12 +160,12 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
             conexao = DriverManager.getConnection(url, usuario, senha);
 
             // Comando SQL para inserir os dados
-            String sql = "INSERT INTO amigos (nome, telefone) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO amigos (nome, telefone) VALUES (?, ?)";
             pstmt = conexao.prepareStatement(sql);
 
             // Configuração dos valores
             pstmt.setString(1, nome);
-            pstmt.setString(2, telefone);
+            pstmt.setString(2, telefone.replaceAll("[^0-9]", "")); // Remove os caracteres não numéricos do telefone
 
             // Executa o comando SQL
             int linhasAfetadas = pstmt.executeUpdate();
@@ -179,10 +177,7 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
 
             // Limpa os campos do formulário
             JTFNomeAmigo.setText("");
-            JTFTelefone.setText("");
-
-            // Atualiza a tabela (se você carrega os dados diretamente da base)
-            carregaTabela();
+            JTFTelefone.setText("(DDD) _ _ _ _ _ -_ _ _ _");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao cadastrar amigo: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -246,7 +241,4 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 
-    private void carregaTabela() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
