@@ -99,24 +99,19 @@ public class Amigo {
      * @param amigo Objeto Amigo a ser inserido.
      * @return true se a inserção for bem-sucedida, false caso contrário.
      */
-    public boolean insereAmigoBD(Amigo amigo) {
-        // Definindo a consulta SQL para inserção
-        String query = "INSERT INTO amigos (id, nome_amigo, telefone) VALUES (?, ?, ?)";
-
-        try (Connection con = ConexaoBd.getConnection(); 
-             PreparedStatement stmt = con.prepareStatement(query)) {
-            // Setando os parâmetros da consulta
-            stmt.setInt(1, amigo.getId());
-            stmt.setString(2, amigo.getNome());
-            stmt.setString(3, amigo.getTelefone());
-
-            // Executando a consulta
-            stmt.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            System.err.println("Erro ao salvar amigo: " + e.getMessage());
+    public boolean insereAmigoBD(String nome, String telefone) {
+        if (nome == null || nome.isEmpty()) {
+            System.out.println("Erro: Nome do amigo não pode ser vazio.");
             return false;
         }
+        if (telefone == null) {
+            System.out.println("Erro: Telefone inválido.");
+            return false;
+        }
+
+        int id = maiorID() + 1;
+        Amigo objeto = new Amigo(id, nome, telefone);
+        return dao.insereAmigoBD(objeto); // Sucesso ou falha da inserção no banco
     }
 
     /**
@@ -194,6 +189,9 @@ public class Amigo {
             System.err.println("Erro ao carregar amigo: " + e.getMessage());
         }
         return amigo;
+    }
+    public int maiorID(){
+        return dao.maiorID();
     }
     
 }
