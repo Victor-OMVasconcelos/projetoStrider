@@ -144,4 +144,22 @@ public class AmigoDAO {
         }
         return amigo;
     }
+    
+    /**
+     * Retorna o maior ID de uma ferramenta na tabela de ferramentas.
+     *
+     * @return Maior ID.
+     */
+    public int maiorID() {
+        int maiorID = 0;
+        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT MAX(id) AS id FROM ferramentas")) {
+
+            if (res.next()) {
+                maiorID = res.getInt("id");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro: " + ex);
+        }
+        return maiorID;
+    }
 }
