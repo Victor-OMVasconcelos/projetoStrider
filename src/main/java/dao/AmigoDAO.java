@@ -20,14 +20,15 @@ public class AmigoDAO {
      */
     public ArrayList<Amigo> getMinhaLista() {
         minhaLista.clear(); // Limpa a lista antes de atualizar com dados novos.
-    try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT * FROM ferramentas")) {
+    try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT * FROM amigo")) {
 
             while (res.next()) {
                 int id = res.getInt("id");
-                String nome = res.getString("nome_amigo");
+                String nome = res.getString("nome");
                 String telefone = res.getString("telefone");
+                int item = res.getInt("item");
 
-                Amigo amigo = new Amigo(id, nome, telefone);
+                Amigo amigo = new Amigo(id, nome, telefone, item);
                 minhaLista.add(amigo);
             }
         } catch (SQLException ex) {
@@ -44,7 +45,7 @@ public class AmigoDAO {
      */
     public boolean insereAmigoBD(Amigo amigo) {
         // Definindo a consulta SQL para inserção
-        String query = "INSERT INTO amigos (id, nome_amigo, telefone) VALUES (?, ?, ?)";
+        String query = "INSERT INTO amigo (id, nome, telefone, item) VALUES (?, ?, ?, ?)";
 
         try (Connection con = ConexaoBd.getConnection(); 
              PreparedStatement stmt = con.prepareStatement(query)) {
@@ -52,6 +53,7 @@ public class AmigoDAO {
             stmt.setInt(1, amigo.getId());
             stmt.setString(2, amigo.getNome());
             stmt.setString(3, amigo.getTelefone());
+            stmt.setInt(4, amigo.getItem());
 
             // Executando a consulta
             stmt.executeUpdate();
@@ -70,7 +72,7 @@ public class AmigoDAO {
      */
     public boolean deletaAmigoBD(int id) {
         // Definindo a consulta SQL para exclusão
-        String query = "DELETE FROM amigos WHERE id = ?";
+        String query = "DELETE FROM amigo WHERE id = ?";
 
         try (Connection con = ConexaoBd.getConnection(); 
              PreparedStatement stmt = con.prepareStatement(query)) {
@@ -94,7 +96,7 @@ public class AmigoDAO {
      */
     public boolean atualizaAmigoBD(Amigo amigo) {
         // Definindo a consulta SQL para atualização
-        String query = "UPDATE amigos SET nome_amigo = ?, telefone = ? WHERE id = ?";
+        String query = "UPDATE amigo SET nome = ?, telefone = ?, item = ? WHERE id = ?";
 
         try (Connection con = ConexaoBd.getConnection(); 
             PreparedStatement stmt = con.prepareStatement(query)) {
@@ -102,6 +104,7 @@ public class AmigoDAO {
             stmt.setString(1, amigo.getNome());
             stmt.setString(2, amigo.getTelefone());
             stmt.setInt(3, amigo.getId());
+            stmt.setInt(4, amigo.getId());
 
             // Executando a consulta
             stmt.executeUpdate();
@@ -120,7 +123,7 @@ public class AmigoDAO {
      */
     public Amigo carregaAmigo(int id) {
         // Definindo a consulta SQL para carregar um amigo
-        String query = "SELECT id, nome_amigo, telefone FROM amigos WHERE id = ?";
+        String query = "SELECT id, nome, telefone, item FROM amigo WHERE id = ?";
         Amigo amigo = null;
 
         try (Connection con = ConexaoBd.getConnection(); 
@@ -134,8 +137,9 @@ public class AmigoDAO {
                 if (rs.next()) {
                     amigo = new Amigo(
                         rs.getInt("id"),
-                        rs.getString("nome_amigo"),
-                        rs.getString("telefone")
+                        rs.getString("nome"),
+                        rs.getString("telefone"),
+                        rs.getInt("item")
                     );
                 }
             }
@@ -146,13 +150,13 @@ public class AmigoDAO {
     }
     
     /**
-     * Retorna o maior ID de uma ferramenta na tabela de ferramentas.
+     * Retorna o maior ID de um amigo na tabela de ferramentas.
      *
      * @return Maior ID.
      */
     public int maiorID() {
         int maiorID = 0;
-        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT MAX(id) AS id FROM ferramentas")) {
+        try (Connection conexao = ConexaoBd.getConnection(); Statement stmt = conexao.createStatement(); ResultSet res = stmt.executeQuery("SELECT MAX(id) AS id FROM amigo")) {
 
             if (res.next()) {
                 maiorID = res.getInt("id");
