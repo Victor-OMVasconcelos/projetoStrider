@@ -1,43 +1,53 @@
 package modelo;
 
-import dao.ConexaoBd;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import dao.AmigoDAO;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Amigo {
 
     private int id;
     private String nome;
     private String telefone;
+    private AmigoDAO dao;
 
+    /**
+     * Construtor para inicializar o amigo com id, nome e telefone.
+     * Valida o telefone e o nome.
+     * 
+     * @param id ID do amigo.
+     * @param nome Nome do amigo.
+     * @param telefone Telefone do amigo no formato 'XXXX-XXXX'.
+     */
     public Amigo(int id, String nome, String telefone) {
         if (nome == null || nome.isEmpty() || telefone == null || telefone.isEmpty()) {
             throw new IllegalArgumentException("Nome e telefone não podem ser vazios.");
         }
-        if (telefone == null || !telefone.matches("\\d{4,5}-\\d{4}")) {
+        if (!telefone.matches("\\d{4,5}-\\d{4}")) {
             throw new IllegalArgumentException("Telefone em formato inválido. Use 'XXXX-XXXX'.");
         }
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
+        this.dao = dao != null ? dao : new AmigoDAO(); // Permite injeção do DAO
     }
 
+    // Construtor sem parâmetros, inicializa com valores padrão.
     public Amigo() {
-        // Inicializa os atributos com valores padrão, se necessário
         this.id = 0;
         this.nome = "";
         this.telefone = "";
+        this.dao = new AmigoDAO();
     }
 
-    public Amigo(int id, String nome, String telefone, String email) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
+    public AmigoDAO getDao() {
+        return dao;
     }
 
+    public void setDao(AmigoDAO dao) {
+        this.dao = dao;
+    }
+
+    // Métodos getter e setter
     public int getId() {
         return id;
     }
@@ -67,53 +77,14 @@ public class Amigo {
         }
         this.telefone = telefone;
     }
-
-    public void save() throws SQLException {
-        String query = "INSERT INTO amigos (id, nome_amigo, telefone) VALUES (?, ?, ?)";
-
-        try (Connection con = ConexaoBd.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
-            stmt.setInt(1, this.id);
-            stmt.setString(2, this.nome);
-            stmt.setString(3, this.telefone);
-            stmt.executeUpdate();
-            System.out.println("Amigo salvo com sucesso!");
-        } catch (SQLException e) {
-            System.err.println("Erro ao salvar amigo: " + e.getMessage());
-            throw e;
-        }
-    }
-
+    // Retorna os dados do amigo em String
     @Override
     public String toString() {
         return "Amigo{" + "id=" + id + ", nome='" + nome + '\'' + ", telefone='" + telefone + '\'' + '}';
     }
-
-     public List<Amigo> getMinhaLista() {
-        List<Amigo> listaAmigos = null;
-        if (listaAmigos == null) {
-            listaAmigos = new ArrayList<>();
-        }
-        return listaAmigos;
+    
+    // Retorna a lista de amigos
+    public ArrayList<Amigo> getMinhaLista() {
+        return dao.getMinhaLista();
     }
-
-    public void adicionarAmigo(Amigo amigo) {
-        getMinhaLista().add(amigo);
-    }
-
-    public boolean atualizaFerramentaBD(int id, String nome, String marca, double preco) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public boolean atualizaAmigoBD(int id, String nome, String marca, double preco) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public boolean deletaAmigoBD(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public Object getQuantidadeItens() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }
