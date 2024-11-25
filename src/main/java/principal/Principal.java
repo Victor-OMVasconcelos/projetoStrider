@@ -8,7 +8,6 @@ import java.sql.SQLException;
  * gráfica e outras operações principais, como a criação de conexões e o
  * lançamento da tela principal.
  *
- * @author joaov
  */
 public class Principal {
 
