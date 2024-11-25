@@ -6,7 +6,6 @@ import java.util.ArrayList;
 /**
  * Representa uma ferramenta com informações como nome, marca, preço, e operações no banco de dados.
  * 
- * @author victor omv
  */
 public class Ferramenta {
 
