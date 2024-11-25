@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
  * Tela de exibição das informações sobre o software.
  * Exibe uma descrição detalhada do sistema e um botão de fechamento.
  * 
- * @author joaov
  */
 public class Descricao extends JFrame {
 
