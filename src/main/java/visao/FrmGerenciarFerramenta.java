@@ -5,10 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Ferramenta;
 
-/**
- *
- * @author joaov
- */
+
 public class FrmGerenciarFerramenta extends javax.swing.JFrame {
 
     private Ferramenta objetoferramenta; //cria vinculo com Ferramenta
