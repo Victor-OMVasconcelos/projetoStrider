@@ -12,7 +12,6 @@ import modelo.Ferramenta;
  * Classe responsável pela interação com o banco de dados para os empréstimos.
  * Gerencia operações de CRUD (Create, Read, Update, Delete).
  * 
- * @author joaov
  */
 public class EmprestimoDAO {
 
