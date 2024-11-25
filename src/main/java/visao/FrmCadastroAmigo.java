@@ -9,7 +9,6 @@ import modelo.Amigo;
 /**
  * Interface para cadastro de Amigos no mySQL.
  *
- * @author joaov
  */
 public class FrmCadastroAmigo extends javax.swing.JFrame {
     //Atributo para armazenar amigo
