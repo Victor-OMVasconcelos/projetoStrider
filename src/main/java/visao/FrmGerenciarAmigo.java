@@ -9,7 +9,6 @@ import modelo.Amigo;
  * Classe responsável por gerenciar a interface gráfica para operações com amigos.
  * Inclui funcionalidades de cadastro, alteração, exclusão e exibição de amigos.
  *
- * @author Cauan
  */
 public class FrmGerenciarAmigo extends javax.swing.JFrame {
 
