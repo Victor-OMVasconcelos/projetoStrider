@@ -82,6 +82,17 @@ public class Emprestimo {
         return true; // Devolução válida
     }
 
+    
+    /**
+    * Gera uma representação textual do objeto Emprestimo.
+    * 
+    * O método `toString()` cria uma descrição detalhada do objeto,
+    * incluindo informações como o ID do empréstimo, nome do amigo associado,
+    * quantidade de ferramentas emprestadas, data de empréstimo e data de devolução.
+    * Caso a data de devolução não tenha sido definida, é exibida como "Não devolvido".
+    * 
+    * @return String representando o objeto Emprestimo.
+    */
     @Override
     public String toString() {
         String devolucao = (dataDevolucao != null) ? dataDevolucao.toString() : "Não devolvido";
