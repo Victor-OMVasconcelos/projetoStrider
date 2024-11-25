@@ -9,10 +9,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Amigo;
 
-/**
- *
- * @author LoLvSk
- */
 public class FrmEmprestimo extends javax.swing.JFrame {
 
     private Amigo objetoAmigo; // Controlador para operações relacionadas ao amigo
