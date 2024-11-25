@@ -8,7 +8,6 @@ import modelo.Ferramenta;
  * Classe responsável pela interação com o banco de dados para as ferramentas.
  * Ela contém métodos para inserir, atualizar, deletar e consultar ferramentas.
  *
- * @author joaov
  */
 public class FerramentaDAO {
 
