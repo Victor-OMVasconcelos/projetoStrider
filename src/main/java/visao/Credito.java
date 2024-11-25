@@ -12,7 +12,6 @@ import javax.swing.JTextPane;
  * Tela de exibição dos créditos do projeto.
  * Exibe os créditos dos desenvolvedores e um botão de fechamento.
  * 
- * @author joaov
  */
 public class Credito extends JFrame {
 
