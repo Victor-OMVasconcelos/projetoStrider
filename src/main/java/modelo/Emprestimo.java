@@ -7,7 +7,6 @@ import java.util.List;
  * Representa um empréstimo de ferramentas a um amigo com data de empréstimo e devolução.
  * Permite registrar o amigo, as ferramentas emprestadas e as datas de empréstimo e devolução.
  * 
- * @author joaov
  */
 public class Emprestimo {
 
