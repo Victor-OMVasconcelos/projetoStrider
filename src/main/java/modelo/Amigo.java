@@ -155,7 +155,11 @@ public class Amigo {
     /**
      * Atualiza os dados de um amigo no banco de dados.
      *
+     * @param id
+     * @param nome
      * @param amigo Objeto Amigo contendo as novas informações.
+     * @param item
+     * @param telefone
      * @return true se a atualização for bem-sucedida, false caso contrário.
      */
     public boolean atualizaAmigoBD(int id, String nome, String telefone, int item) {
