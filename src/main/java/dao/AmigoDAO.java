@@ -103,7 +103,7 @@ public class AmigoDAO {
             // Setando os parâmetros da consulta
             stmt.setString(1, amigo.getNome());
             stmt.setString(2, amigo.getTelefone());
-            stmt.setInt(3, amigo.getId());
+            stmt.setInt(3, amigo.getItem());
             stmt.setInt(4, amigo.getId());
 
             // Executando a consulta
