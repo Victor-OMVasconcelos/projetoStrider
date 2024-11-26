@@ -3,11 +3,16 @@ package visao;
 import dao.ConexaoBd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import modelo.Amigo;
@@ -232,19 +237,19 @@ public class FrmEmprestimo extends javax.swing.JFrame {
 
     private void JBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAlterarActionPerformed
         try {
-            // Obter a linha selecionada na tabela
-            int linhaSelecionada = JTableEmprestimo.getSelectedRow();
+            // Obter a linha selecionada na tabela JTableRelatorio
+            int linhaSelecionada = JTableRelatorio.getSelectedRow();
 
             // Verificar se uma linha foi selecionada
             if (linhaSelecionada == -1) {
                 throw new Exception("Selecione um item para alterar.");
             }
 
-            // Obter os dados da linha selecionada
-            DefaultTableModel modeloEmprestimo = (DefaultTableModel) JTableEmprestimo.getModel();
-            String idAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 0) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 0).toString() : "";
-            String nomeAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 1) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 1).toString() : "";
-            String quantidadeItens = modeloEmprestimo.getValueAt(linhaSelecionada, 2) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 2).toString() : "";
+            // Obter os dados da linha selecionada na JTableRelatorio
+            DefaultTableModel modeloRelatorio = (DefaultTableModel) JTableRelatorio.getModel();
+            String idAmigo = modeloRelatorio.getValueAt(linhaSelecionada, 0) != null ? modeloRelatorio.getValueAt(linhaSelecionada, 0).toString() : "";
+            String nomeAmigo = modeloRelatorio.getValueAt(linhaSelecionada, 1) != null ? modeloRelatorio.getValueAt(linhaSelecionada, 1).toString() : "";
+            String quantidadeItens = modeloRelatorio.getValueAt(linhaSelecionada, 2) != null ? modeloRelatorio.getValueAt(linhaSelecionada, 2).toString() : "";
 
             // Pegar os valores das novas datas de empréstimo e devolução
             String novaDataEmprestimo = JTFDataEmprestimo.getText().trim();
@@ -267,7 +272,25 @@ public class FrmEmprestimo extends javax.swing.JFrame {
                 throw new Exception("Data de devolução inválida.");
             }
 
-            // Conectar ao banco de dados e atualizar o registro
+            // Remover os listeners temporariamente para evitar loops recursivos
+            DefaultTableModel modelo = (DefaultTableModel) JTableRelatorio.getModel();
+            List<TableModelListener> listeners = new ArrayList<>(Arrays.asList(modelo.getTableModelListeners()));
+            for (TableModelListener listener : listeners) {
+                modelo.removeTableModelListener(listener);
+            }
+
+            // Atualizar os valores da JTableRelatorio (segundo modelo)
+            modeloRelatorio.setValueAt(nomeAmigo, linhaSelecionada, 1);  // Atualiza o nome_amigo na tabela
+            modeloRelatorio.setValueAt(quantidadeItens, linhaSelecionada, 2);  // Atualiza a quantidade_itens
+            modeloRelatorio.setValueAt(novaDataEmprestimoFormatada, linhaSelecionada, 3);  // Atualiza a data_emprestimo
+            modeloRelatorio.setValueAt(novaDataDevolucaoFormatada, linhaSelecionada, 4);  // Atualiza a data_devolucao
+
+            // Re-adicionar os listeners após a alteração
+            for (TableModelListener listener : listeners) {
+                modelo.addTableModelListener(listener);
+            }
+
+            // Conectar ao banco de dados para atualizar os dados
             Connection connection = ConexaoBd.getConnection();
             String sql = "UPDATE relatorio SET nome_amigo = ?, quantidade_itens = ?, data_emprestimo = ?, data_devolucao = ? WHERE id_amigo = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -287,10 +310,10 @@ public class FrmEmprestimo extends javax.swing.JFrame {
             connection.close();
 
             // Mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Empréstimo alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Empréstimo alterado com sucesso na tabela e no banco de dados!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             // Exibir erro se algo falhar
-            JOptionPane.showMessageDialog(this, "Erro ao alterar no banco de dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao alterar os dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JBAlterarActionPerformed
 
@@ -389,10 +412,11 @@ public class FrmEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_JBFecharActionPerformed
 
     private void carregaTabela() {
+        // Limpar a tabela JTableEmprestimo
         DefaultTableModel modeloTabela1 = (DefaultTableModel) JTableEmprestimo.getModel();
         modeloTabela1.setRowCount(0); // Limpa a tabela antes de carregar
 
-        // Obtenha a lista de amigos
+        // Obtenha a lista de amigos e carregue na tabela JTableEmprestimo
         List<Amigo> minhaLista = objetoAmigo.getMinhaLista();
 
         // Verifique se a lista não é nula
@@ -404,20 +428,85 @@ public class FrmEmprestimo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nenhum amigo encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // Impede a edição de células na Tabela 2
+        // Agora, vamos carregar os dados na tabela JTableRelatorio
         DefaultTableModel modeloTabela2 = (DefaultTableModel) JTableRelatorio.getModel();
+        modeloTabela2.setRowCount(0); // Limpa a tabela antes de carregar
+
+        try {
+            // Conectar ao banco de dados e carregar os dados para JTableRelatorio
+            Connection connection = ConexaoBd.getConnection();
+
+            String sql = "SELECT id_amigo, nome_amigo, quantidade_itens, data_emprestimo, data_devolucao FROM relatorio";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            // Preencher a JTableRelatorio com os dados do banco
+            while (rs.next()) {
+                String idAmigo = rs.getString("id_amigo");
+                String nomeAmigo = rs.getString("nome_amigo");
+                String quantidadeItens = rs.getString("quantidade_itens");
+                String dataEmprestimo = rs.getString("data_emprestimo");
+                String dataDevolucao = rs.getString("data_devolucao");
+
+                // Adicionar uma nova linha com os dados
+                modeloTabela2.addRow(new Object[]{idAmigo, nomeAmigo, quantidadeItens, dataEmprestimo, dataDevolucao});
+            }
+
+            // Fechar a conexão
+            rs.close();
+            stmt.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar os dados da tabela: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Impede a edição de células na Tabela 2 (caso deseje desabilitar a edição completamente)
         JTableRelatorio.setDefaultEditor(Object.class, null);  // Desabilita a edição para todas as células
 
-        // Adicionando o TableModelListener
+        // Se você deseja permitir a edição e refletir as alterações na interface e no banco de dados, 
+        // remova ou ajuste o código abaixo que impede a edição
         modeloTabela2.addTableModelListener(e -> {
             if (e.getType() == javax.swing.event.TableModelEvent.UPDATE) {
-                // Caso ocorra uma tentativa de atualização
+                // Caso ocorra uma tentativa de atualização, você pode aqui atualizar os dados no banco de dados
                 int row = e.getFirstRow();
                 int column = e.getColumn();
 
-                // Restaura o valor original da célula após a tentativa de edição
-                Object originalValue = modeloTabela2.getValueAt(row, column);
-                modeloTabela2.setValueAt(originalValue, row, column);
+                // Atualizar o banco de dados conforme a célula modificada
+                String idAmigo = modeloTabela2.getValueAt(row, 0).toString();
+                String novoValor = modeloTabela2.getValueAt(row, column).toString();
+
+                // Exemplo: Atualizando dados no banco conforme a célula modificada
+                try {
+                    Connection connection = ConexaoBd.getConnection();
+                    String updateSQL = "UPDATE relatorio SET ";
+
+                    if (column == 1) { // Nome do amigo
+                        updateSQL += "nome_amigo = ?";
+                    } else if (column == 2) { // Quantidade de itens
+                        updateSQL += "quantidade_itens = ?";
+                    } else if (column == 3) { // Data de empréstimo
+                        updateSQL += "data_emprestimo = ?";
+                    } else if (column == 4) { // Data de devolução
+                        updateSQL += "data_devolucao = ?";
+                    }
+
+                    updateSQL += " WHERE id_amigo = ?";
+
+                    PreparedStatement stmt = connection.prepareStatement(updateSQL);
+                    stmt.setString(1, novoValor);
+                    stmt.setString(2, idAmigo);
+
+                    // Executar o update no banco
+                    stmt.executeUpdate();
+
+                    // Fechar a conexão
+                    stmt.close();
+                    connection.close();
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o banco de dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
