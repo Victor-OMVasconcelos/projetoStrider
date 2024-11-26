@@ -34,15 +34,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="JTFQuantidadeItens" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel3" alignment="0" pref="107" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="JTFDataDevolucao" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                          <Component id="JTFDataEmprestimo" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="JTFQuantidadeItens" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
+                          <Component id="JTFDataEmprestimo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="JTFDataDevolucao" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -97,13 +95,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="JTFDataEmprestimo">
-    </Component>
-    <Component class="javax.swing.JTextField" name="JTFDataDevolucao">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JTFDataDevolucaoActionPerformed"/>
-      </Events>
-    </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -274,6 +265,10 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="JTFDataEmprestimo">
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="JTFDataDevolucao">
     </Component>
   </SubComponents>
 </Form>
