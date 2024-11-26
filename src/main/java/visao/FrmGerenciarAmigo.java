@@ -219,13 +219,13 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
             // validando dados da interface gráfica.
             int id = 0;
             if (this.JTableAmigos.getSelectedRow() == -1) {
-                throw new Mensagem("Selecione uma ferramenta para APAGAR!!!");
+                throw new Mensagem("Selecione uma amigo para APAGAR!!!");
             } else {
                 id = Integer.parseInt(this.JTableAmigos.getValueAt(this.JTableAmigos.getSelectedRow(), 0).toString());
             }
 
             // retorna 0 -> primeiro botão | 1 -> segundo botão | 2 -> terceiro botão
-            int respostaUsuario = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja apagar esta ferramenta ?");
+            int respostaUsuario = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja apagar esta amigo ?");
 
             if (respostaUsuario == 0) {// clicou em SIM
                 // envia os dados para o Amigo processar, Amigo não possui métodos da BD ainda
