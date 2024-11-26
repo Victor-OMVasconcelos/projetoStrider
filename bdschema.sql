@@ -1,5 +1,5 @@
 -- Cria o schema strider_bd
-CREATE SCHEMA IF NOT EXISTS strider_bd;
+CREATE SCHEMA IF NOT EXISTS strider_db;
 USE strider_bd;
 
 -- Cria a tabela amigo
