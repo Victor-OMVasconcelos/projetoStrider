@@ -232,12 +232,12 @@ public class FrmEmprestimo extends javax.swing.JFrame {
 
     private void JBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAlterarActionPerformed
         try {
-            // Obter os dados da linha selecionada
+            // Obter os dados da linha selecionada na tabela de empréstimos
             int linhaSelecionada = JTableEmprestimo.getSelectedRow();
 
             // Verificar se uma linha foi selecionada
             if (linhaSelecionada == -1) {
-                throw new Exception("Selecione um item para emprestar.");
+                throw new Exception("Selecione um item para alterar.");
             }
 
             // Obter os dados da linha selecionada
@@ -245,7 +245,7 @@ public class FrmEmprestimo extends javax.swing.JFrame {
             String idAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 0) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 0).toString() : "";
             String nomeAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 1) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 1).toString() : "";
             String quantidadeItens = modeloEmprestimo.getValueAt(linhaSelecionada, 2) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 2).toString() : "";
-            String dataEmprestimo = modeloEmprestimo.getValueAt(linhaSelecionada, 3) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 3).toString() : "";
+            String dataEmprestimo = JTFDataEmprestimo.getText().trim(); // Agora obtemos a data alterada do campo JTF
             String dataDevolucao = modeloEmprestimo.getValueAt(linhaSelecionada, 4) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 4).toString() : "";
 
             // Verificar se a data de empréstimo não está vazia
@@ -253,19 +253,21 @@ public class FrmEmprestimo extends javax.swing.JFrame {
                 throw new Exception("Data de empréstimo não pode ser vazia.");
             }
 
-            // Código para salvar no banco de dados (exemplo)
+            // Converter a data para o formato do banco de dados
+            String dataEmprestimoFormatada = converterData(dataEmprestimo);
+            if (dataEmprestimoFormatada == null) {
+                throw new Exception("Data de empréstimo inválida.");
+            }
+
+            // Atualizar a tabela com a nova data
+            modeloEmprestimo.setValueAt(dataEmprestimo, linhaSelecionada, 3); // Atualiza a data de empréstimo na tabela
+
+            // Se necessário, atualizar no banco de dados
             Connection connection = ConexaoBd.getConnection();
-            String sql = "INSERT INTO relatorio (id_amigo, nome_amigo, quantidade_itens, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?, ?)";
+            String sql = "UPDATE relatorio SET data_emprestimo = ? WHERE id_amigo = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
-
-            // Defina os valores
-            stmt.setString(1, idAmigo);
-            stmt.setString(2, nomeAmigo);
-            stmt.setString(3, quantidadeItens);
-            stmt.setString(4, dataEmprestimo); // Data de empréstimo
-            stmt.setString(5, dataDevolucao);
-
-            // Executar a inserção
+            stmt.setString(1, dataEmprestimoFormatada);
+            stmt.setString(2, idAmigo);
             stmt.executeUpdate();
 
             // Fechar a conexão
@@ -273,9 +275,9 @@ public class FrmEmprestimo extends javax.swing.JFrame {
             connection.close();
 
             // Mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Empréstimo registrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Data de empréstimo atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar no banco de dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar a data de empréstimo: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JBAlterarActionPerformed
 
