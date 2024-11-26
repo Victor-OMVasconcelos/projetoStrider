@@ -3,9 +3,9 @@
 ## Contribuidores
 Victor Oliveira m=Morais de Vasconcelos - RA 162311849
 
-João Vitor Ferraz de Camargo - RA
+João Vitor Ferraz de Camargo - RA 162312364
 
-Cauan da Silva do Santos - RA
+Cauan da Silva do Santos - RA 162311667
 
 ## Informações do banco de dados
 Login do BD: root ('root'@'localhost)
