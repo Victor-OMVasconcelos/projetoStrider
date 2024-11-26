@@ -32,7 +32,7 @@ public class FerramentaDAO {
             while (res.next()) {
                 Ferramenta ferramenta = new Ferramenta(
                     res.getInt("id"),
-                    res.getString("nome"),
+                    res.getString("nome_ferramenta"),
                     res.getString("marca"),
                     res.getDouble("preco")
                 );
@@ -73,7 +73,7 @@ public class FerramentaDAO {
      * @return true se a inserção for bem-sucedida, false caso contrário.
      */
     public boolean insereFerramentaBD(Ferramenta ferramenta) {
-        String query = "INSERT INTO ferramenta(id, nome, marca, preco) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO ferramenta(id, nome_ferramenta, marca, preco) VALUES(?, ?, ?, ?)";
 
         try (Connection conexao = ConexaoBd.getConnection();
              PreparedStatement stmt = conexao.prepareStatement(query)) {
@@ -119,7 +119,7 @@ public class FerramentaDAO {
      * @return true se a atualização for bem-sucedida, false caso contrário.
      */
     public boolean atualizaFerramentaBD(Ferramenta ferramenta) {
-        String query = "UPDATE ferramenta SET nome = ?, marca = ?, preco = ? WHERE id = ?";
+        String query = "UPDATE ferramenta SET nome_ferramenta = ?, marca = ?, preco = ? WHERE id = ?";
 
         try (Connection conexao = ConexaoBd.getConnection();
              PreparedStatement stmt = conexao.prepareStatement(query)) {
@@ -154,7 +154,7 @@ public class FerramentaDAO {
                 if (res.next()) {
                     return new Ferramenta(
                         id,
-                        res.getString("nome"),
+                        res.getString("nome_ferramenta"),
                         res.getString("marca"),
                         res.getDouble("preco")
                     );
