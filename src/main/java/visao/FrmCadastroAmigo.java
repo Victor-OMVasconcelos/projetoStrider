@@ -41,6 +41,7 @@ public class FrmCadastroAmigo extends javax.swing.JFrame {
         JBLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Amigo");
 
         jLabel1.setText("Nome do Amigo(a):");
 
