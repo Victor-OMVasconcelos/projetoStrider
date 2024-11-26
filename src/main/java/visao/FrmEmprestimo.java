@@ -3,7 +3,6 @@ package visao;
 import dao.ConexaoBd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +50,7 @@ public class FrmEmprestimo extends javax.swing.JFrame {
         jTextField3.setText("jTextField3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Empréstimos");
 
         JTableEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
