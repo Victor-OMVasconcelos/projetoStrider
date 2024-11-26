@@ -1,6 +1,6 @@
 -- Cria o schema strider_bd
 CREATE SCHEMA IF NOT EXISTS strider_db;
-USE strider_bd;
+USE strider_db;
 
 -- Cria a tabela amigo
 CREATE TABLE amigo (
