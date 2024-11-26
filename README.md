@@ -1,6 +1,7 @@
 # projetoStrider
 
 ## Contribuidores
+
 Victor Oliveira m=Morais de Vasconcelos - RA 162311849
 
 João Vitor Ferraz de Camargo - RA 162312364
@@ -8,6 +9,7 @@ João Vitor Ferraz de Camargo - RA 162312364
 Cauan da Silva do Santos - RA 162311667
 
 ## Informações do banco de dados
+
 Login do BD: root ('root'@'localhost)
 
 Senha do BD: root
@@ -42,5 +44,27 @@ Relatório de todos os empréstimos realizados, com indicação do amigo que mai
 
 ### Persistência Local
 Salvar todos os dados (ferramentas, amigos e empréstimos) localmente, para que sejam preservados ao fechar o aplicativo.
+
+## Requisitos não funcionais
+
+### Plataforma
+O software deve rodar localmente no computador do usuário, sem necessidade de conexão com a internet.
+
+### Interface do Usuário
+Interface simples e intuitiva.
+
+Uma interface gráfica (GUI) amigável.
+
+### Desempenho
+Responder rapidamente às ações do usuário (cadastro, consulta e geração de relatórios).
+
+### Segurança
+Evitar a exclusão acidental de dados importantes.
+
+### Compatibilidade
+Compatível com o sistema operacional do computador do usuário.
+
+### Simplicidade no Uso
+O software deve ser fácil de utilizar, sem necessidade de conhecimento técnico avançado.
 
 
