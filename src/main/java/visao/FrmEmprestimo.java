@@ -232,7 +232,7 @@ public class FrmEmprestimo extends javax.swing.JFrame {
 
     private void JBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAlterarActionPerformed
         try {
-            // Obter os dados da linha selecionada na tabela de empréstimos
+            // Obter a linha selecionada na tabela
             int linhaSelecionada = JTableEmprestimo.getSelectedRow();
 
             // Verificar se uma linha foi selecionada
@@ -245,29 +245,41 @@ public class FrmEmprestimo extends javax.swing.JFrame {
             String idAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 0) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 0).toString() : "";
             String nomeAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 1) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 1).toString() : "";
             String quantidadeItens = modeloEmprestimo.getValueAt(linhaSelecionada, 2) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 2).toString() : "";
-            String dataEmprestimo = JTFDataEmprestimo.getText().trim(); // Agora obtemos a data alterada do campo JTF
-            String dataDevolucao = modeloEmprestimo.getValueAt(linhaSelecionada, 4) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 4).toString() : "";
 
-            // Verificar se a data de empréstimo não está vazia
-            if (dataEmprestimo.isEmpty()) {
-                throw new Exception("Data de empréstimo não pode ser vazia.");
+            // Pegar os valores das novas datas de empréstimo e devolução
+            String novaDataEmprestimo = JTFDataEmprestimo.getText().trim();
+            String novaDataDevolucao = JTFDataDevolucao.getText().trim();
+
+            // Verificar se os campos obrigatórios não estão vazios
+            if (idAmigo.isEmpty() || nomeAmigo.isEmpty() || quantidadeItens.isEmpty() || novaDataEmprestimo.isEmpty() || novaDataDevolucao.isEmpty()) {
+                throw new Exception("Todos os campos obrigatórios devem ser preenchidos.");
             }
 
-            // Converter a data para o formato do banco de dados
-            String dataEmprestimoFormatada = converterData(dataEmprestimo);
-            if (dataEmprestimoFormatada == null) {
+            // Validar as novas datas
+            String novaDataEmprestimoFormatada = converterData(novaDataEmprestimo);
+            String novaDataDevolucaoFormatada = converterData(novaDataDevolucao);
+
+            if (novaDataEmprestimoFormatada == null) {
                 throw new Exception("Data de empréstimo inválida.");
             }
 
-            // Atualizar a tabela com a nova data
-            modeloEmprestimo.setValueAt(dataEmprestimo, linhaSelecionada, 3); // Atualiza a data de empréstimo na tabela
+            if (novaDataDevolucaoFormatada == null) {
+                throw new Exception("Data de devolução inválida.");
+            }
 
-            // Se necessário, atualizar no banco de dados
+            // Conectar ao banco de dados e atualizar o registro
             Connection connection = ConexaoBd.getConnection();
-            String sql = "UPDATE relatorio SET data_emprestimo = ? WHERE id_amigo = ?";
+            String sql = "UPDATE relatorio SET nome_amigo = ?, quantidade_itens = ?, data_emprestimo = ?, data_devolucao = ? WHERE id_amigo = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, dataEmprestimoFormatada);
-            stmt.setString(2, idAmigo);
+
+            // Definir os parâmetros para o SQL
+            stmt.setString(1, nomeAmigo);
+            stmt.setString(2, quantidadeItens);
+            stmt.setString(3, novaDataEmprestimoFormatada);
+            stmt.setString(4, novaDataDevolucaoFormatada);
+            stmt.setString(5, idAmigo);
+
+            // Executar a atualização no banco de dados
             stmt.executeUpdate();
 
             // Fechar a conexão
@@ -275,15 +287,16 @@ public class FrmEmprestimo extends javax.swing.JFrame {
             connection.close();
 
             // Mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Data de empréstimo atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Empréstimo alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao atualizar a data de empréstimo: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // Exibir erro se algo falhar
+            JOptionPane.showMessageDialog(this, "Erro ao alterar no banco de dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JBAlterarActionPerformed
 
     private void JBEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEmprestarActionPerformed
         try {
-            // Obter os dados da linha selecionada
+            // Obter os dados da linha selecionada na tabela de empréstimos
             int linhaSelecionada = JTableEmprestimo.getSelectedRow();
 
             // Verificar se uma linha foi selecionada
@@ -293,39 +306,58 @@ public class FrmEmprestimo extends javax.swing.JFrame {
 
             // Obter os dados da linha selecionada
             DefaultTableModel modeloEmprestimo = (DefaultTableModel) JTableEmprestimo.getModel();
-            String idAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 0).toString();
-            String nomeAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 1).toString();
-            String quantidadeItens = modeloEmprestimo.getValueAt(linhaSelecionada, 2).toString();
-            String dataEmprestimo = modeloEmprestimo.getValueAt(linhaSelecionada, 3).toString(); // Data de empréstimo
-            String dataDevolucao = modeloEmprestimo.getValueAt(linhaSelecionada, 4).toString();
+            String idAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 0) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 0).toString() : "";
+            String nomeAmigo = modeloEmprestimo.getValueAt(linhaSelecionada, 1) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 1).toString() : "";
+            String quantidadeItens = modeloEmprestimo.getValueAt(linhaSelecionada, 2) != null ? modeloEmprestimo.getValueAt(linhaSelecionada, 2).toString() : "";
+            String dataEmprestimo = JTFDataEmprestimo.getText().trim();  // Pega a data de empréstimo
+            String dataDevolucao = JTFDataDevolucao.getText().trim();    // Pega a data de devolução
 
-            // Verificar se a data de empréstimo não está vazia
-            if (dataEmprestimo == null || dataEmprestimo.isEmpty()) {
-                throw new Exception("Data de empréstimo não pode ser vazia.");
+            // Verificar se os campos essenciais não estão vazios
+            if (idAmigo.isEmpty() || nomeAmigo.isEmpty() || quantidadeItens.isEmpty() || dataEmprestimo.isEmpty() || dataDevolucao.isEmpty()) {
+                throw new Exception("Todos os campos obrigatórios devem ser preenchidos.");
             }
 
-            // Restante do código para salvar no banco de dados, por exemplo
+            // Validar a data de empréstimo e de devolução
+            String dataEmprestimoFormatada = converterData(dataEmprestimo);
+            String dataDevolucaoFormatada = converterData(dataDevolucao);
+
+            if (dataEmprestimoFormatada == null) {
+                throw new Exception("Data de empréstimo inválida.");
+            }
+
+            if (dataDevolucaoFormatada == null) {
+                throw new Exception("Data de devolução inválida.");
+            }
+
+            // Atualizar o banco de dados com as informações do empréstimo
             Connection connection = ConexaoBd.getConnection();
             String sql = "INSERT INTO relatorio (id_amigo, nome_amigo, quantidade_itens, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(sql);
-
-            // Defina os valores
             stmt.setString(1, idAmigo);
             stmt.setString(2, nomeAmigo);
             stmt.setString(3, quantidadeItens);
-            stmt.setString(4, dataEmprestimo); // Data de empréstimo
-            stmt.setString(5, dataDevolucao);
+            stmt.setString(4, dataEmprestimoFormatada);
+            stmt.setString(5, dataDevolucaoFormatada);
 
-            // Executar a inserção
+            // Executar a atualização no banco de dados
             stmt.executeUpdate();
 
             // Fechar a conexão
             stmt.close();
             connection.close();
 
+            // Adicionar os dados na JTableRelatorio
+            DefaultTableModel modeloRelatorio = (DefaultTableModel) JTableRelatorio.getModel();
+            modeloRelatorio.addRow(new Object[]{idAmigo, nomeAmigo, quantidadeItens, dataEmprestimoFormatada, dataDevolucaoFormatada});
+
+            // Remover o item da tabela de empréstimos
+            DefaultTableModel modeloTabelaEmprestimo = (DefaultTableModel) JTableEmprestimo.getModel();
+            modeloTabelaEmprestimo.removeRow(linhaSelecionada);
+
             // Mensagem de sucesso
-            JOptionPane.showMessageDialog(this, "Empréstimo registrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Empréstimo registrado e item movido para o relatório com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
+            // Exibir erro se algo falhar
             JOptionPane.showMessageDialog(this, "Erro ao salvar no banco de dados: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JBEmprestarActionPerformed
