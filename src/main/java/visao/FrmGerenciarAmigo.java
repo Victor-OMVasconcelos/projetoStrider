@@ -43,6 +43,7 @@ public class FrmGerenciarAmigo extends javax.swing.JFrame {
         JTFQuantidadeItens = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciar Amigos");
 
         JTFTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
