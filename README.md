@@ -1,5 +1,5 @@
-# projetoStrider
-
+# projetoStrider 
+O software é uma aplicação local desenvolvida para facilitar o gerenciamento de ferramentas e empréstimos. Ele permite o cadastro de ferramentas e amigos, o registro de empréstimos e devoluções, e a geração de relatórios detalhados sobre os itens emprestados, os custos envolvidos e o histórico de transações.
 ## Contribuidores
 
 Victor Oliveira m=Morais de Vasconcelos - RA 162311849
