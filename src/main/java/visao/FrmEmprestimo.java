@@ -1,8 +1,10 @@
 package visao;
 
+import java.text.ParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 import modelo.Amigo;
 
 
@@ -18,6 +20,7 @@ public class FrmEmprestimo extends javax.swing.JFrame {
         initComponents();
         this.objetoAmigo = new Amigo(); // carrega objeto de Amigo
         this.carregaTabela();
+        this.configurarData();
     }
 
 
@@ -25,8 +28,6 @@ public class FrmEmprestimo extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField3 = new javax.swing.JTextField();
-        JTFDataEmprestimo = new javax.swing.JTextField();
-        JTFDataDevolucao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableEmprestimo = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -40,16 +41,12 @@ public class FrmEmprestimo extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        JTFDataEmprestimo = new javax.swing.JFormattedTextField();
+        JTFDataDevolucao = new javax.swing.JFormattedTextField();
 
         jTextField3.setText("jTextField3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        JTFDataDevolucao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTFDataDevolucaoActionPerformed(evt);
-            }
-        });
 
         JTableEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,14 +154,13 @@ public class FrmEmprestimo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(JTFQuantidadeItens)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
-                            .addComponent(JTFDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JTFDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                            .addComponent(JTFQuantidadeItens)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JTFDataEmprestimo)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JTFDataDevolucao))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(441, Short.MAX_VALUE)
@@ -238,10 +234,6 @@ public class FrmEmprestimo extends javax.swing.JFrame {
         JTFQuantidadeItens.setText("");
         JTableEmprestimo.clearSelection();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void JTFDataDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTFDataDevolucaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTFDataDevolucaoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Alterar: Atualizar os dados do amigo selecionado
@@ -358,6 +350,8 @@ public class FrmEmprestimo extends javax.swing.JFrame {
         }
     });
 }
+    
+    
 
     /**
      * @param args the command line arguments
@@ -396,8 +390,8 @@ public class FrmEmprestimo extends javax.swing.JFrame {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField JTFDataDevolucao;
-    private javax.swing.JTextField JTFDataEmprestimo;
+    private javax.swing.JFormattedTextField JTFDataDevolucao;
+    private javax.swing.JFormattedTextField JTFDataEmprestimo;
     private javax.swing.JTextField JTFQuantidadeItens;
     private javax.swing.JTable JTableEmprestimo;
     private javax.swing.JButton jButton1;
@@ -413,4 +407,14 @@ public class FrmEmprestimo extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+
+    private void configurarData() {
+        try {
+            MaskFormatter mascaraData = new MaskFormatter("##/##/####");
+            mascaraData.setPlaceholderCharacter('_');
+            JTFDataEmprestimo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(mascaraData));
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao configurar a máscara de data.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
