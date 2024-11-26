@@ -1,3 +1,4 @@
+
 package visao;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class FrmGerenciarFerramenta extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerenciar Ferramentas");
 
         jLabel3.setText("Preço:");
 
@@ -261,55 +263,54 @@ public class FrmGerenciarFerramenta extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_JBApagarActionPerformed
-            public void carregaTabela() {
+    public void carregaTabela() {
         DefaultTableModel modelo = (DefaultTableModel) this.JTableFerramentas.getModel();
-        modelo.setNumRows(0); // Posiciona na primeira linha da tabela
-        // Carrega a lista de objetos aluno
-        ArrayList<Ferramenta> minhaLista = objetoferramenta.getMinhaLista();
+        modelo.setNumRows(0); // Limpa a tabela
+        ArrayList<Ferramenta> minhaLista = objetoferramenta.getMinhaLista();  // Obtém a lista de ferramentas
         for (Ferramenta a : minhaLista) {
             modelo.addRow(new Object[]{
                 a.getId(),
-                a.getNome(),
+                a.getNome(), // Usando o método correto para pegar o nome da ferramenta
                 a.getMarca(),
-                a.getPreco(),
-            });
+                a.getPreco(),});
         }
     }
+
     
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmGerenciarFerramenta().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(FrmGerenciarFerramenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new FrmGerenciarFerramenta().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBAlterar;
